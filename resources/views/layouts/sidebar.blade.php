@@ -26,7 +26,8 @@
         <!-- Logo & Toggle -->
         <div class="flex items-center justify-between h-16 px-4 border-b border-gray-200 shrink-0">
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-2" x-show="desktopOpen || isMobile">
-                <x-application-logo class="block w-auto text-gray-800 fill-current h-9" />
+                {{-- <x-application-logo class="block w-auto text-gray-800 fill-current h-9" /> --}}
+                <img src="{{ asset('assets/logo-intira.png') }}" alt="Logo" class="block w-auto h-9">
             </a>
 
             <!-- Desktop Toggle -->
@@ -58,6 +59,30 @@
                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                 </svg>
                 <span x-show="desktopOpen || isMobile" class="transition-all duration-200">Dashboard</span>
+            </a>
+
+            <div class="pt-2 pb-2 border-t border-gray-200" x-show="desktopOpen || isMobile">
+                <p class="px-3 mb-2 text-xs font-semibold tracking-wider text-gray-500 uppercase">Karyawan</p>
+            </div>
+
+            <a href="{{ route('presensi-karyawan.index') }}"
+                class="flex items-center px-3 py-2 text-sm font-medium rounded-lg group {{ request()->routeIs('presensi-karyawan.*') ? 'bg-teal-50 text-teal-700' : 'text-gray-700 hover:bg-gray-50' }}">
+                <svg class="flex-shrink-0 w-5 h-5" :class="{ 'mr-3': desktopOpen || isMobile }" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span x-show="desktopOpen || isMobile">Presensi Online</span>
+            </a>
+
+            <a href="{{ route('e-learning-karyawan.index') }}"
+                class="flex items-center px-3 py-2 text-sm font-medium rounded-lg group {{ request()->routeIs('e-learning-karyawan.*') ? 'bg-teal-50 text-teal-700' : 'text-gray-700 hover:bg-gray-50' }}">
+                <svg class="flex-shrink-0 w-5 h-5" :class="{ 'mr-3': desktopOpen || isMobile }" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <span x-show="desktopOpen || isMobile">E-Learning Karyawan</span>
             </a>
 
             {{-- ============================================================ --}}
@@ -271,7 +296,7 @@
                         </svg>
                         <span x-show="desktopOpen || isMobile">Daily Reports Manager</span>
                     </a>
-                @endrole --}}
+            @endrole --}}
 
             @endrole
 
@@ -279,7 +304,7 @@
             {{-- Pengaturan — Master Data                                        --}}
             {{-- Hanya superadmin & marketing yang bisa edit                    --}}
             {{-- ============================================================ --}}
-            {{-- @role('superadmin|marketing')
+            @role('superadmin|marketing')
                 <div class="pt-2 pb-2 border-t border-gray-200" x-show="desktopOpen || isMobile">
                     <p class="px-3 mb-2 text-xs font-semibold tracking-wider text-gray-500 uppercase">Pengaturan</p>
                 </div>
@@ -313,7 +338,7 @@
                     </svg>
                     <span x-show="desktopOpen || isMobile">Tindakan Validasi</span>
                 </a>
-            @endrole --}}
+            @endrole
 
         </nav>
 
@@ -371,7 +396,7 @@
                         d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
-            <x-application-logo class="block w-auto h-8 text-gray-800 fill-current" />
+            <img src="{{ asset('assets/logo-intira.png') }}" alt="Logo" class="block w-auto h-8">
             <div class="w-10"></div>
         </div>
 

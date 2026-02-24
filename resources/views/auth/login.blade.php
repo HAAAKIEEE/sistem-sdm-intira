@@ -1,122 +1,120 @@
-{{-- <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block w-full mt-1"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="text-indigo-600 border-gray-300 rounded shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="text-sm text-gray-600 ms-2">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout> --}}
 <x-guest-layout>
-    <div class="flex min-h-screen">
-        <!-- Left Side - Image/Brand -->
+    <div class="flex min-h-screen bg-gray-50">
+
+        <!-- Left Side - Branding -->
         <div
-            class="items-center justify-center hidden p-12 lg:flex lg:w-1/2 bg-gradient-to-br from-teal-500 to-teal-700">
-            <div class="text-center">
+            class="items-center justify-center hidden p-12 lg:flex lg:w-1/2 bg-gradient-to-br from-teal-500 via-teal-600 to-teal-700">
+            <div class="max-w-lg text-center">
+                <!-- Logo -->
                 <div class="mb-8">
-                    <x-application-logo class="w-20 h-20 mx-auto text-white fill-current" />
+                    <div class="inline-flex items-center justify-center p-4 bg-white shadow-xl rounded-2xl">
+                        <img src="{{ asset('assets/logo-intira.png') }}" alt="Intira Logo" class="h-16">
+                    </div>
                 </div>
+
                 <h1 class="mb-4 text-4xl font-bold text-white">
-                    Welcome Back!
+                    Sistem Manajemen SDM
                 </h1>
-                <p class="text-lg text-teal-100">
-                    Sign in to continue to your dashboard
+                <p class="mb-8 text-lg text-teal-100">
+                    Kelola data karyawan, presensi, dan laporan harian dengan mudah dan efisien
                 </p>
 
-                <!-- Decorative Elements -->
-                <div class="mt-12 space-y-4">
-                    <div class="flex items-center justify-center gap-3 text-white">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                        <span>Secure & Trusted</span>
+                <!-- Feature Highlights -->
+                <div class="space-y-4 text-left">
+                    <div
+                        class="flex items-start gap-3 p-4 transition bg-white rounded-lg shadow-md bg-opacity-10 backdrop-blur-sm hover:bg-opacity-20">
+                        <div
+                            class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-white rounded-lg bg-opacity-20">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-white">Penggajian</h3>
+                            <p class="text-sm text-teal-100">Sistem Payroll Karyawan</p>
+                        </div>
                     </div>
-                    <div class="flex items-center justify-center gap-3 text-white">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        <span>Fast & Reliable</span>
+                    <div
+                        class="flex items-start gap-3 p-4 transition bg-white rounded-lg shadow-md bg-opacity-10 backdrop-blur-sm hover:bg-opacity-20">
+                        <div
+                            class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-white rounded-lg bg-opacity-20">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-white">Manajemen Data Karyawan</h3>
+                            <p class="text-sm text-teal-100">Kelola data & penempatan cabang</p>
+                        </div>
                     </div>
-                    <div class="flex items-center justify-center gap-3 text-white">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>24/7 Available</span>
+
+                    <div
+                        class="flex items-start gap-3 p-4 transition bg-white rounded-lg shadow-md bg-opacity-10 backdrop-blur-sm hover:bg-opacity-20">
+                        <div
+                            class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-white rounded-lg bg-opacity-20">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-white">Monitoring Presensi</h3>
+                            <p class="text-sm text-teal-100">Laporan kehadiran & absensi karyawan</p>
+                        </div>
                     </div>
+
+                </div>
+
+                <!-- Footer Badge -->
+                <div
+                    class="flex items-center justify-center gap-2 px-4 py-2 mx-auto mt-8 bg-white rounded-full w-fit bg-opacity-10 backdrop-blur-sm">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                    <span class="text-sm font-medium text-white">Secure & Trusted Platform</span>
                 </div>
             </div>
         </div>
 
         <!-- Right Side - Login Form -->
-        <div class="flex items-center justify-center w-full px-6 lg:w-1/2 bg-gray-50">
+        <div class="flex items-center justify-center w-full px-6 py-12 lg:w-1/2">
             <div class="w-full max-w-md">
 
-                <!-- Mobile Logo (hanya tampil di mobile) -->
+                <!-- Mobile Logo & Title -->
                 <div class="mb-8 text-center lg:hidden">
-                    <x-application-logo class="w-16 h-16 mx-auto text-teal-600 fill-current" />
-                    <h2 class="mt-4 text-2xl font-bold text-gray-800">Sign In</h2>
+                    <img src="{{ asset('assets/logo-intira.png') }}" alt="Intira Logo" class="h-16 mx-auto mb-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Sistem SDM Intira</h2>
+                    <p class="mt-1 text-sm text-gray-500">Masuk ke akun Anda</p>
                 </div>
 
                 <!-- Desktop Title -->
                 <div class="hidden mb-8 lg:block">
-                    <h2 class="text-3xl font-bold text-gray-800">Sign In</h2>
-                    <p class="mt-2 text-gray-600">Enter your credentials to access your account</p>
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="{{ asset('assets/icon-intira.png') }}" alt="Icon" class="w-auto h-10">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Selamat Datang</h2>
+                            <p class="text-sm text-gray-500">Sistem Manajemen SDM Intira</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600">Masuk dengan kredensial Anda untuk melanjutkan</p>
                 </div>
 
                 <!-- Session Status -->
                 <x-auth-session-status class="mb-4" :status="session('status')" />
 
                 <!-- Login Form -->
-                <form method="POST" action="{{ route('login') }}" class="space-y-6">
+                <form method="POST" action="{{ route('login') }}" class="space-y-5">
                     @csrf
 
-                    <!-- Email Address -->
+                    <!-- Email -->
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">
-                            Email Address
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-700">
+                            Email
                         </label>
-                        <div class="relative mt-1">
+                        <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
@@ -126,8 +124,8 @@
                             </div>
                             <input id="email" type="email" name="email" value="{{ old('email') }}" required
                                 autofocus
-                                class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition @error('email') border-red-500 @enderror"
-                                placeholder="you@example.com">
+                                class="block w-full pl-10 pr-3 py-2.5 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition @error('email') border-red-500 @enderror"
+                                placeholder="nama@email.com">
                         </div>
                         @error('email')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -136,10 +134,10 @@
 
                     <!-- Password -->
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700">
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-700">
                             Password
                         </label>
-                        <div class="relative mt-1">
+                        <div class="relative">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
@@ -148,49 +146,50 @@
                                 </svg>
                             </div>
                             <input id="password" type="password" name="password" required
-                                class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition @error('password') border-red-500 @enderror"
-                                placeholder="Enter your password">
+                                class="block w-full pl-10 pr-3 py-2.5 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition @error('password') border-red-500 @enderror"
+                                placeholder="Masukkan password">
                         </div>
                         @error('password')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <!-- Remember Me & Forgot Password -->
+                    <!-- Remember & Forgot -->
                     <div class="flex items-center justify-between">
                         <label class="flex items-center">
                             <input type="checkbox" name="remember"
                                 class="w-4 h-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500">
-                            <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                            <span class="ml-2 text-sm text-gray-600">Ingat saya</span>
                         </label>
 
-                        @if (Route::has('password.request'))
+                        {{-- @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}"
                                 class="text-sm font-medium text-teal-600 hover:text-teal-700">
-                                Forgot password?
+                                Lupa password?
                             </a>
-                        @endif
+                        @endif --}}
                     </div>
 
                     <!-- Submit Button -->
                     <button type="submit"
-                        class="w-full px-4 py-3 text-white transition bg-teal-600 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
-                        <span class="flex items-center justify-center gap-2">
-                            Sign In
+                        class="w-full px-4 py-3 text-white transition bg-teal-600 rounded-lg shadow-lg hover:bg-teal-700 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                        <span class="flex items-center justify-center gap-2 font-medium">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                             </svg>
+                            Masuk ke Dashboard
                         </span>
                     </button>
                 </form>
 
-                <!-- Footer -->
-                <div class="mt-6 text-center">
+                <!-- Help Section -->
+                <div class="p-4 mt-6 border border-gray-200 rounded-lg bg-gray-50">
                     <p class="text-sm text-gray-600">
-                        Don't have an account?
-                        <a href="https://wa.me/+6281549559541" class="font-medium text-teal-600 hover:text-teal-700">
-                            Contact Administrator
+                        <span class="font-medium">Butuh bantuan?</span>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSecdUNCYmTaC4c0goVu4IZgTkmvmYlfnlvwTdAoSwQcZrxD4Q/viewform?usp=publish-editor"
+                            class="text-teal-600 hover:text-teal-700">
+                            Hubungi Administrator
                         </a>
                     </p>
                 </div>
@@ -198,7 +197,7 @@
                 <!-- Copyright -->
                 <div class="mt-8 text-center">
                     <p class="text-xs text-gray-500">
-                        © {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
+                        © {{ date('Y') }} All rights reserved.
                     </p>
                 </div>
             </div>

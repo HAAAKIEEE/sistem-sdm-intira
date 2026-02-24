@@ -5,6 +5,7 @@ use App\Http\Controllers\BranchUserController;
 use App\Http\Controllers\Contact90Controller;
 use App\Http\Controllers\DailyReportController;
 use App\Http\Controllers\DailyReportFoController;
+use App\Http\Controllers\ELearningKaryawanController;
 use App\Http\Controllers\MasterDataController;
 use App\Http\Controllers\Payroll\GajihPokokController;
 use App\Http\Controllers\Payroll\GajihPokokImportController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Payroll\PotonganController;
 use App\Http\Controllers\Payroll\PotonganImportController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\PresensiImportController;
+use App\Http\Controllers\PresensiKaryawanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThreeHourReportDashboardController;
 // use App\Http\Controllers\Payroll\PotonganImportController;
@@ -33,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/gaji-saya', [PayrollController::class, 'show'])
         ->name('gaji-saya.show')
         ->middleware('auth');
+
+    Route::resource('presensi-karyawan', PresensiKaryawanController::class);
+    Route::resource('e-learning-karyawan', ELearningKaryawanController::class);
     /*
     |--------------------------------------------------------------------------
     | DAILY REPORT FO - FO AREA
@@ -319,7 +324,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/gaji-pokok/{gajihPokok}/export-pdf', [GajihPokokController::class, 'exportPdf'])
             ->name('gaji-pokok.export-pdf');
 
-            
+
         /*
         |--------------------------------------------------------------------------
         | POTONGAN
