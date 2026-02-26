@@ -292,11 +292,11 @@ Route::middleware('auth')->group(function () {
         | PRESENSI
         |--------------------------------------------------------------------------
         */
+        Route::get('/presensi/template', [PresensiImportController::class, 'template'])->name('presensi.template');
         Route::resource('presensi', PresensiController::class);
         Route::post('/presensi/{user}/izin', [PresensiController::class, 'storeIzin'])->name('presensi.izin');
         Route::post('/presensi/{user}/sakit', [PresensiController::class, 'storeSakit'])->name('presensi.sakit');
         Route::post('/presensi-import', [PresensiImportController::class, 'store'])->name('presensi.import');
-        Route::get('/presensi/template', [PresensiImportController::class, 'template'])->name('presensi.template');
 
         /*
         |--------------------------------------------------------------------------
@@ -306,6 +306,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/gaji-pokok', [PayrollController::class, 'index'])->name('gaji-pokok.index');
         // Route::get('/payroll/{branch}/show', [PayrollController::class, 'show'])->name('gaji.show');
         // Route tanpa parameter {id}
+        Route::get('/gaji-pokok/template', [GajihPokokImportController::class, 'template'])->name('gaji-pokok.template');
 
         // Route::get('/gaji-pokok', [GajihPokokController::class, 'index'])->name('gaji-pokok.index');
         Route::get('/gaji-pokok/{branch}/create', [GajihPokokController::class, 'create'])->name('gaji-pokok.create');
@@ -315,7 +316,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/gaji-pokok/{gajiPokok}', [GajihPokokController::class, 'destroy'])->name('gaji-pokok.destroy');
 
         Route::post('/gaji-pokok-import', [GajihPokokImportController::class, 'store'])->name('gaji-pokok.import');
-        Route::get('/gaji-pokok/template', [GajihPokokImportController::class, 'template'])->name('gaji-pokok.template');
         Route::get('/gaji-pokok/{gajihPokok}/export-pdf', [GajihPokokController::class, 'exportPdf'])
             ->name('gaji-pokok.export-pdf');
 
