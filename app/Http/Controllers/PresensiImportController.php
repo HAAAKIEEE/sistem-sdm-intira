@@ -109,72 +109,185 @@ class PresensiImportController extends Controller
     /**
      * Download template Excel
      */
+    // public function template()
+    // {
+    //     $templatePath = storage_path('app/templates/template_import_presensi.xlsx');
+
+    //     if (!file_exists($templatePath)) {
+    //         return $this->generateTemplate();
+    //     }
+
+    //     return response()->download(
+    //         $templatePath,
+    //         'template_import_presensi.xlsx'
+    //     );
+    // }
+
+    // /**
+    //  * Generate template Excel secara dinamis
+    //  */
+    // private function generateTemplate()
+    // {
+    //     $data = [
+    //         [
+    //             'nama'                    => 'Juhratun Nissa',
+    //             'tanggal'                 => '2026-01-01',
+    //             'status'                  => 'CHECK_IN',
+    //             'jam'                     => '08:00',
+    //             'wilayah'                 => 'Jakarta',
+    //         ],
+    //         [
+    //             'nama'                    => 'Juhratun Nissa',
+    //             'tanggal'                 => '2026-01-01',
+    //             'status'                  => 'ISTIRAHAT_IN',
+    //             'jam'                     => '12:00',
+    //             'wilayah'                 => 'Jakarta',
+    //         ],
+    //     ];
+
+    //     return Excel::download(
+    //         new class($data) implements
+    //             \Maatwebsite\Excel\Concerns\FromArray,
+    //             \Maatwebsite\Excel\Concerns\WithHeadings {
+
+    //             private $data;
+
+    //             public function __construct($data)
+    //             {
+    //                 $this->data = $data;
+    //             }
+
+    //             public function array(): array
+    //             {
+    //                 return $this->data;
+    //             }
+
+    //             public function headings(): array
+    //             {
+    //                 return [
+    //                     'nama',
+    //                     'tanggal',
+    //                     'status',
+    //                     'jam',
+    //                     'wilayah',
+    //                     'keterangan',
+    //                 ];
+    //             }
+    //         },
+    //         'template_import_presensi.xlsx'
+    //     );
+    // }
+
+
     public function template()
-    {
-        $templatePath = storage_path('app/templates/template_import_presensi.xlsx');
+{
+    return Excel::download(
+        new class implements
+            \Maatwebsite\Excel\Concerns\FromArray,
+            \Maatwebsite\Excel\Concerns\WithHeadings {
 
-        if (!file_exists($templatePath)) {
-            return $this->generateTemplate();
-        }
+            public function array(): array
+            {
+                return [
+                    [
+                        'tanggal'    => '2026-01-15',
+                        'nama'       => 'Isyevira',
+                        'status'     => 'CHECK_IN',
+                        'jam'        => '08:00:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => '',
+                    ],
+                    [
+                        'tanggal'    => '2026-01-15',
+                        'nama'       => 'Isyevira',
+                        'status'     => 'ISTIRAHAT_OUT',
+                        'jam'        => '12:00:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => '',
+                    ],
+                    [
+                        'tanggal'    => '2026-01-15',
+                        'nama'       => 'Isyevira',
+                        'status'     => 'ISTIRAHAT_IN',
+                        'jam'        => '13:00:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => '',
+                    ],
+                    [
+                        'tanggal'    => '2026-01-15',
+                        'nama'       => 'Isyevira',
+                        'status'     => 'CHECK_OUT',
+                        'jam'        => '17:00:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => '',
+                    ],
+                    // ✅ Contoh Telat Masuk
+                    [
+                        'tanggal'    => '2026-01-16',
+                        'nama'       => 'Rekhasyavira',
+                        'status'     => 'CHECK_IN',
+                        'jam'        => '09:30:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => 'Telat Masuk',
+                    ],
+                    [
+                        'tanggal'    => '2026-01-16',
+                        'nama'       => 'Rekhasyavira',
+                        'status'     => 'CHECK_OUT',
+                        'jam'        => '17:00:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => '',
+                    ],
+                    // ✅ Contoh Izin/Cuti
+                    [
+                        'tanggal'    => '2026-01-17',
+                        'nama'       => 'Budi Santoso',
+                        'status'     => 'CHECK_IN',
+                        'jam'        => '08:00:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => 'Izin/Cuti',
+                    ],
+                    [
+                        'tanggal'    => '2026-01-17',
+                        'nama'       => 'Budi Santoso',
+                        'status'     => 'CHECK_OUT',
+                        'jam'        => '17:00:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => '',
+                    ],
+                    // ✅ Contoh Sakit
+                    [
+                        'tanggal'    => '2026-01-18',
+                        'nama'       => 'Siti Rahayu',
+                        'status'     => 'CHECK_IN',
+                        'jam'        => '08:00:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => 'Sakit',
+                    ],
+                    [
+                        'tanggal'    => '2026-01-18',
+                        'nama'       => 'Siti Rahayu',
+                        'status'     => 'CHECK_OUT',
+                        'jam'        => '17:00:00',
+                        'wilayah'    => 'WITA',
+                        'keterangan' => '',
+                    ],
+                ];
+            }
 
-        return response()->download(
-            $templatePath,
-            'template_import_presensi.xlsx'
-        );
-    }
-
-    /**
-     * Generate template Excel secara dinamis
-     */
-    private function generateTemplate()
-    {
-        $data = [
-            [
-                'nama'                    => 'Juhratun Nissa',
-                'tanggal'                 => '2026-01-01',
-                'status'                  => 'CHECK_IN',
-                'jam'                     => '08:00',
-                'wilayah'                 => 'Jakarta',
-            ],
-            [
-                'nama'                    => 'Juhratun Nissa',
-                'tanggal'                 => '2026-01-01',
-                'status'                  => 'ISTIRAHAT_IN',
-                'jam'                     => '12:00',
-                'wilayah'                 => 'Jakarta',
-            ],
-        ];
-
-        return Excel::download(
-            new class($data) implements
-                \Maatwebsite\Excel\Concerns\FromArray,
-                \Maatwebsite\Excel\Concerns\WithHeadings {
-
-                private $data;
-
-                public function __construct($data)
-                {
-                    $this->data = $data;
-                }
-
-                public function array(): array
-                {
-                    return $this->data;
-                }
-
-                public function headings(): array
-                {
-                    return [
-                        'nama',
-                        'tanggal',
-                        'status',
-                        'jam',
-                        'wilayah',
-                        'keterangan',
-                    ];
-                }
-            },
-            'template_import_presensi.xlsx'
-        );
-    }
+            public function headings(): array
+            {
+                return [
+                    'tanggal',
+                    'nama',
+                    'status',
+                    'jam',
+                    'wilayah',
+                    'keterangan',
+                ];
+            }
+        },
+        'template_import_presensi.xlsx'
+    );
+}
 }
