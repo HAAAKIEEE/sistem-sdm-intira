@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     Input Laporan Harian Baru

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
                 <h2 class="text-xl font-semibold leading-tight text-gray-800">
                     📜 History Laporan Harian FO
@@ -84,7 +84,7 @@
 
                     {{-- Table --}}
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm">
+                        <table class="w-full text-sm min-w-max whitespace-nowrap">
                             <thead class="border-b border-gray-200 bg-gray-50">
                                 <tr>
                                     <th class="px-4 py-3 text-xs font-semibold text-left text-gray-600 uppercase">#</th>
