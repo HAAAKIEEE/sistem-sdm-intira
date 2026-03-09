@@ -36,7 +36,7 @@ class Presensi extends Model
     }
     /**
      * Hitung potongan keterlambatan
-     * 
+     *
      * @param int $potonganPerMenit Potongan per menit keterlambatan (default: 5000)
      * @return array ['menit_terlambat' => int, 'potongan' => int]
      */

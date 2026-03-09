@@ -78,24 +78,6 @@
                                 </option>
                             </select>
                         </div>
-                        {{-- <div>
-                            <select name="status_presensi" onchange="this.form.submit()"
-                                class="px-4 py-2 pr-10 border rounded-lg">
-                                <option value="">Semua Status</option>
-                                <option value="LENGKAP" {{ request('status_presensi')=='LENGKAP' ? 'selected' : '' }}>
-                                    Lengkap
-                                </option>
-                                <option value="TIDAK_LENGKAP" {{ request('status_presensi')=='TIDAK_LENGKAP'
-                                    ? 'selected' : '' }}>
-                                    Tidak Lengkap
-                                </option>
-                                <option value="BELUM_ABSEN" {{ request('status_presensi')=='BELUM_ABSEN' ? 'selected'
-                                    : '' }}>
-                                    Belum Absen
-                                </option>
-                            </select>
-                        </div> --}}
-
 
                         {{-- TANGGAL --}}
                         <div>
@@ -113,96 +95,7 @@
                             Cari
                         </button>
                     </form>
-
-                    {{-- TABLE --}}
-                    {{-- <div class="overflow-x-auto">
-                        <table class="min-w-full text-sm">
-                            <thead>
-                                <tr class="border-b border-gray-200">
-                                    <th class="px-4 py-4 text-sm font-semibold text-left text-gray-600 uppercase">
-                                        Nama
-                                    </th>
-                                    <th class="px-4 py-4 text-sm font-semibold text-left text-gray-600 uppercase">
-                                        Status
-                                    </th>
-                                    <th class="px-4 py-4 text-sm font-semibold text-left text-gray-600 uppercase">
-                                        Jam Presensi
-                                    </th>
-                                    <th class="px-4 py-4 text-sm font-semibold text-left text-gray-600 uppercase">
-                                        Telat
-                                    </th>
-                                    <th class="px-4 py-4 text-sm font-semibold text-left text-gray-600 uppercase">
-                                        Aksi
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($users as $row)
-                                <tr class="border-t">
-                                    <td class="px-4 py-3">
-                                        {{ $row->name ?? '-' }}
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        @if ($row->presensi_status === 'LENGKAP')
-                                        <span class="px-2 py-1 text-green-700 bg-green-100 rounded">
-                                            Lengkap
-                                        </span>
-                                        @elseif ($row->presensi_status === 'BELUM_ABSEN')
-                                        <span class="px-2 py-1 text-gray-700 bg-gray-200 rounded">
-                                            Belum Absen
-                                        </span>
-                                        @else
-                                        <span class="px-2 py-1 text-yellow-700 bg-yellow-100 rounded">
-                                            Tidak Lengkap
-                                        </span>
-                                        @endif
-                                    </td>
-                                    <td class="px-4 py-3 text-xs">
-                                        CI: {{ $row->presensi_jam['CHECK_IN'] ?? '-' }} |
-                                        IO: {{ $row->presensi_jam['ISTIRAHAT_OUT'] ?? '-' }} |
-                                        II: {{ $row->presensi_jam['ISTIRAHAT_IN'] ?? '-' }} |
-                                        CO: {{ $row->presensi_jam['CHECK_OUT'] ?? '-' }}
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        @if (count($row->presensi_telat))
-                                        <span class="text-red-600">
-                                            {{ implode(', ', $row->presensi_telat) }}
-                                        </span>
-                                        @else
-                                        -
-                                        @endif
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        <div class="relative inline-block text-left">
-                                            <button type="button" onclick="toggleDropdown({{ $row->id }})"
-                                                class="text-gray-400 hover:text-gray-600">
-
-                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path
-                                                        d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                                </svg>
-                                            </button>
-                                            <div id="dropdown-{{ $row->id }}"
-                                                class="fixed z-50 hidden w-48 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                                                <div class="py-1">
-                                                    <a href="{{ route('presensi.show', $row->id) }}"
-                                                        class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                        Detail
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="mt-6">
-                            {{ $users->withQueryString()->links() }}
-                        </div>
-
-                    </div> --}}
-                    <div class="relative w-full overflow-x-auto md:overflow-x-visible custom-scrollbar">
+                    <div class="relative w-full overflow-x-auto custom-scrollbar">
 
                         <table class="w-full text-sm min-w-max whitespace-nowrap">
                             <thead>
@@ -220,18 +113,6 @@
                                 @foreach ($users as $row)
                                 <tr class="border-t">
                                     <td class="px-4 py-3">{{ $row->name ?? '-' }}</td>
-
-                                    {{-- <td class="px-4 py-3">
-                                        @if ($row->presensi_status === 'LENGKAP')
-                                        <span class="px-2 py-1 text-green-700 bg-green-100 rounded">Lengkap</span>
-                                        @elseif ($row->presensi_status === 'BELUM_ABSEN')
-                                        <span class="px-2 py-1 text-gray-700 bg-gray-200 rounded">Belum
-                                            Absen</span>
-                                        @else
-                                        <span class="px-2 py-1 text-yellow-700 bg-yellow-100 rounded">Tidak
-                                            Lengkap</span>
-                                        @endif
-                                    </td> --}}
                                     <td class="px-4 py-3">
                                         @if ($row->presensi_status === 'LENGKAP')
                                         <span class="px-2 py-1 text-green-700 bg-green-100 rounded">
@@ -296,26 +177,6 @@
                                                         </svg>
                                                         Detail
                                                     </a>
-                                                    {{-- <a href="{{ route('presensi.show', $row->id) }}"
-                                                        class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
-                                                        Cuti
-                                                    </a>
-                                                    <a href="{{ route('presensi.show', $row->id) }}"
-                                                        class="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor"
-                                                            viewBox="0 0 24 24">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                stroke-width="2"
-                                                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                                        </svg>
-                                                        Sakit
-                                                    </a> --}}
 
                                                     <!-- 🔥 CUTI/IZIN - LANGSUNG SUBMIT -->
                                                     <form action="{{ route('presensi.izin', $row->id) }}" method="POST"
@@ -370,8 +231,6 @@
 
                 </div>
             </div>
-            {{-- <h1>hello world</h1> --}}
-            {{-- FILTER TANGGAL --}}
         </div>
     </div>
 
@@ -424,7 +283,7 @@
                                     <li>• Format: Kolom sesuai template</li>
                                     <li>• Maksimal 10MB</li>
                                     <a href="{{ route('presensi.template') }}"
-                                        class="inline-block mt-2 px-5 py-2 text-white transition bg-teal-500 rounded-lg hover:bg-teal-600">
+                                        class="inline-block px-5 py-2 mt-2 text-white transition bg-teal-500 rounded-lg hover:bg-teal-600">
                                         Download Template
                                     </a>
                                     {{-- <li>• Kolom wajib: Kode Cabang, Nama Cabang</li> --}}
