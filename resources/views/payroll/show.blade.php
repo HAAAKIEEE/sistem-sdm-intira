@@ -37,21 +37,21 @@
                                     {{ strtoupper(substr($gajihPokok->branchUser->user->name, 0, 2)) }}
                                 </div>
                                 <div class="flex-1">
-                                    <h4 class="text-xl font-bold text-gray-900">{{ $gajihPokok->branchUser->user->name
-                                        }}</h4>
+                                    <h4 class="text-xl font-bold text-gray-900">
+                                        {{ $gajihPokok->branchUser->user->name }}</h4>
                                     <p class="mt-1 text-gray-600">{{ $gajihPokok->branchUser->user->email }}</p>
                                     <div class="flex items-center gap-2 mt-3">
-                                        @foreach($gajihPokok->branchUser->user->roles as $role)
-                                        <span
-                                            class="px-3 py-1 text-sm font-medium text-purple-700 bg-purple-100 rounded-full">
-                                            {{ $role->name }}
-                                        </span>
+                                        @foreach ($gajihPokok->branchUser->user->roles as $role)
+                                            <span
+                                                class="px-3 py-1 text-sm font-medium text-purple-700 bg-purple-100 rounded-full">
+                                                {{ $role->name }}
+                                            </span>
                                         @endforeach
-                                        @if($gajihPokok->branchUser->is_manager)
-                                        <span
-                                            class="px-3 py-1 text-sm font-medium text-amber-700 bg-amber-100 rounded-full">
-                                            Manager
-                                        </span>
+                                        @if ($gajihPokok->branchUser->is_manager)
+                                            <span
+                                                class="px-3 py-1 text-sm font-medium rounded-full text-amber-700 bg-amber-100">
+                                                Manager
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
@@ -62,8 +62,8 @@
                             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                                 <div>
                                     <label class="text-sm font-medium text-gray-500">Cabang</label>
-                                    <p class="mt-1 font-semibold text-gray-900">{{ $gajihPokok->branchUser->branch->name
-                                        }}</p>
+                                    <p class="mt-1 font-semibold text-gray-900">
+                                        {{ $gajihPokok->branchUser->branch->name }}</p>
                                 </div>
                                 <div>
                                     <label class="text-sm font-medium text-gray-500">Status</label>
@@ -85,36 +85,36 @@
                             <div class="space-y-4">
                                 <div class="flex items-center justify-between py-3 border-b border-gray-100">
                                     <span class="font-medium text-gray-600">Gaji Pokok</span>
-                                    <span class="font-bold text-gray-900">Rp {{ number_format($gajihPokok->amount, 0,
-                                        ',', '.') }}</span>
+                                    <span class="font-bold text-gray-900">Rp
+                                        {{ number_format($gajihPokok->amount, 0, ',', '.') }}</span>
                                 </div>
 
-                                <div class="p-4 space-y-3 bg-gray-50 rounded-lg">
+                                <div class="p-4 space-y-3 rounded-lg bg-gray-50">
                                     <p class="mb-2 text-sm font-semibold text-gray-700">Tunjangan:</p>
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">Tunjangan Makan</span>
-                                        <span class="text-sm font-semibold text-gray-900">Rp {{
-                                            number_format($gajihPokok->tunjangan_makan, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-semibold text-gray-900">Rp
+                                            {{ number_format($gajihPokok->tunjangan_makan, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">Tunjangan Transportasi</span>
-                                        <span class="text-sm font-semibold text-gray-900">Rp {{
-                                            number_format($gajihPokok->tunjangan_transportasi, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-semibold text-gray-900">Rp
+                                            {{ number_format($gajihPokok->tunjangan_transportasi, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">Tunjangan Jabatan</span>
-                                        <span class="text-sm font-semibold text-gray-900">Rp {{
-                                            number_format($gajihPokok->tunjangan_jabatan, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-semibold text-gray-900">Rp
+                                            {{ number_format($gajihPokok->tunjangan_jabatan, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">Tunjangan Komunikasi</span>
-                                        <span class="text-sm font-semibold text-gray-900">Rp {{
-                                            number_format($gajihPokok->tunjangan_komunikasi, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-semibold text-gray-900">Rp
+                                            {{ number_format($gajihPokok->tunjangan_komunikasi, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="flex items-center justify-between pt-3 border-t border-gray-200">
                                         <span class="text-sm font-semibold text-gray-700">Total Tunjangan</span>
-                                        <span class="text-sm font-bold text-blue-600">Rp {{
-                                            number_format($gajihPokok->total_tunjangan, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-bold text-blue-600">Rp
+                                            {{ number_format($gajihPokok->total_tunjangan, 0, ',', '.') }}</span>
                                     </div>
                                     {{-- <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">Potongan BPJS Ketenagakerjaan</span>
@@ -128,23 +128,23 @@
                                     </div> --}}
                                 </div>
 
-                                <div class="p-4 space-y-3 bg-gray-50 rounded-lg">
+                                <div class="p-4 space-y-3 rounded-lg bg-gray-50">
                                     <p class="mb-2 text-sm font-semibold text-gray-700">Revenue:</p>
 
                                     <div class="flex items-center justify-between">
-                                        <span class="text-sm text-gray-600">Bonus Revenue</span>
-                                        <span class="text-sm font-semibold text-gray-900">Rp {{
-                                            number_format($gajihPokok->bonus_revenue, 0, ',', '.') }}</span>
+                                        <span class="text-sm text-gray-600">Total Revenue</span>
+                                        <span class="text-sm font-semibold text-gray-900">Rp
+                                            {{ number_format($gajihPokok->total_revenue, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">persentasi Revenue</span>
-                                        <span class="text-sm font-semibold text-gray-900">{{
-                                            $gajihPokok->persentase_revenue}}
+                                        <span
+                                            class="text-sm font-semibold text-gray-900">{{ $gajihPokok->persentase_revenue }}
 
-                                            @if($gajihPokok->branchUser && $gajihPokok->branchUser->is_manager)
-                                            Cabang
+                                            @if ($gajihPokok->branchUser && $gajihPokok->branchUser->is_manager)
+                                                Cabang
                                             @else
-                                            %
+                                                %
                                             @endif
 
 
@@ -152,67 +152,68 @@
                                         </span>
                                     </div>
                                     <div class="flex items-center justify-between pt-3 border-t border-gray-200">
-                                        <span class="text-sm font-semibold text-gray-700">Total Revenue</span>
-                                        <span class="text-sm font-bold text-blue-600">Rp {{
-                                            number_format($gajihPokok->total_revenue, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-semibold text-gray-700">Bonus Revenue</span>
+                                        <span class="text-sm font-bold text-blue-600">Rp
+                                            {{ number_format($gajihPokok->bonus_revenue, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
 
-                                <div class="p-4 space-y-3 bg-gray-50 rounded-lg">
+                                <div class="p-4 space-y-3 rounded-lg bg-gray-50">
                                     <p class="mb-2 text-sm font-semibold text-gray-700">KPI:</p>
 
                                     <div class="flex items-center justify-between">
-                                        <span class="text-sm text-gray-600">Total KPI</span>
-                                        <span class="text-sm font-semibold text-gray-900">Rp {{
-                                            number_format($gajihPokok->total_kpi, 0, ',', '.') }}</span>
+                                        <span class="text-sm text-gray-600">Persentasi KPI</span>
+                                        <span
+                                            class="text-sm font-semibold text-gray-900">{{ $gajihPokok->persentase_kpi }}%</span>
                                     </div>
                                     <div class="flex items-center justify-between">
-                                        <span class="text-sm text-gray-600">Persentasi KPI</span>
-                                        <span class="text-sm font-semibold text-gray-900">{{
-                                            $gajihPokok->persentase_kpi}}%</span>
+                                        <span class="text-sm text-gray-600">Bonus KPI</span>
+                                        <span class="text-sm font-semibold text-gray-900">Rp
+                                            {{ number_format($gajihPokok->total_kpi, 0, ',', '.') }}</span>
                                     </div>
-                                    <div class="flex items-center justify-between pt-3 border-t border-gray-200">
-                                        <span class="text-sm font-semibold text-gray-700"> Bonus KPI</span>
-                                        <span class="text-sm font-bold text-red-600">Rp {{
-                                            number_format($gajihPokok->bonus_kpi, 0, ',', '.') }}</span>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-700">Potongan KPI</span>
+                                        <span class="text-sm font-bold text-red-600">Rp
+                                            {{ number_format($gajihPokok->bonus_kpi, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
 
-                                <div class="p-4 space-y-3 bg-gray-50 rounded-lg">
+
+                                <div class="p-4 space-y-3 rounded-lg bg-gray-50">
                                     <p class="mb-2 text-sm font-semibold text-gray-700">Simpanan:</p>
 
 
                                     <div class="flex items-center justify-between pt-3 border-t border-gray-200">
-                                        <span class="text-sm font-semibold text-gray-700">Total Simpanan</span>
-                                        <span class="text-sm font-bold text-red-600">Rp {{
-                                            number_format($gajihPokok->simpanan, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-semibold text-gray-700">Potongan Simpanan</span>
+                                        <span class="text-sm font-bold text-red-600">Rp
+                                            {{ number_format($gajihPokok->simpanan, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
 
-                                <div class="p-4 space-y-3 bg-gray-50 rounded-lg">
+                                <div class="p-4 space-y-3 rounded-lg bg-gray-50">
                                     <p class="mb-2 text-sm font-semibold text-gray-700">Potongan Kesehatan:</p>
 
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">Potongan BPJS Ketenagakerjaan</span>
-                                        <span class="text-sm font-semibold text-gray-900">Rp {{
-                                            number_format($gajihPokok->ptg_bpjs_ketenagakerjaan, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-semibold text-gray-900">Rp
+                                            {{ number_format($gajihPokok->ptg_bpjs_ketenagakerjaan, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <span class="text-sm text-gray-600">Potongan BPJS Kesehatan</span>
-                                        <span class="text-sm font-semibold text-gray-900">Rp {{
-                                            number_format($gajihPokok->ptg_bpjs_kesehatan, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-semibold text-gray-900">Rp
+                                            {{ number_format($gajihPokok->ptg_bpjs_kesehatan, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="flex items-center justify-between pt-3 border-t border-gray-200">
                                         <span class="text-sm font-semibold text-gray-700">Total Potongan</span>
-                                        <span class="text-sm font-bold text-red-600">Rp {{
-                                            number_format($gajihPokok->total_potongan_bpjs, 0, ',', '.') }}</span>
+                                        <span class="text-sm font-bold text-red-600">Rp
+                                            {{ number_format($gajihPokok->total_potongan_bpjs, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
 
                                 <div class="flex items-center justify-between py-3 border-t-2 border-gray-300">
                                     <span class="font-bold text-gray-700">Gaji Kotor (Pokok + Tunjangan)</span>
-                                    <span class="text-lg font-bold text-blue-600">Rp {{ number_format($gajiKotor, 0,
-                                        ',', '.') }}</span>
+                                    <span class="text-lg font-bold text-blue-600">Rp
+                                        {{ number_format($gajiKotor, 0, ',', '.') }}</span>
                                 </div>
 
                                 <div class="flex items-center justify-between py-3 border-b border-gray-100">
@@ -221,13 +222,15 @@
                                 </div>
                                 <div class="flex items-center justify-between py-3 border-b border-gray-100">
                                     <span class="font-medium text-gray-600">Tanggal Input</span>
-                                    <span class="font-semibold text-gray-900">{{ $gajihPokok->created_at->format('d F Y,
-                                        H:i') }}</span>
+                                    <span
+                                        class="font-semibold text-gray-900">{{ $gajihPokok->created_at->format('d F Y,
+                                                                                                                                                                H:i') }}</span>
                                 </div>
                                 <div class="flex items-center justify-between py-3">
                                     <span class="font-medium text-gray-600">Terakhir Update</span>
-                                    <span class="font-semibold text-gray-900">{{ $gajihPokok->updated_at->format('d F Y,
-                                        H:i') }}</span>
+                                    <span
+                                        class="font-semibold text-gray-900">{{ $gajihPokok->updated_at->format('d F Y,
+                                                                                                                                                                H:i') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -246,88 +249,94 @@
                         </div>
 
                         <div class="p-6 overflow-x-auto">
-                            @if(empty($dataPotonganTerlambat))
-                            <div class="py-8 text-center">
-                                <svg class="w-12 h-12 mx-auto text-green-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <p class="mt-2 text-gray-500">Tidak ada keterlambatan untuk periode ini</p>
-                                <p class="mt-1 text-sm text-green-600">Karyawan selalu tepat waktu! 🎉</p>
-                            </div>
-                            @else
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
-                                            Tanggal</th>
-                                        <th class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">Jam
-                                            Check In</th>
-                                        <th class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
-                                            Keterlambatan</th>
-                                        <th class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
-                                            Keterangan</th>
-                                        <th class="px-4 py-3 text-xs font-medium text-right text-gray-500 uppercase">
-                                            Potongan</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($dataPotonganTerlambat as $item)
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">
-                                            {{ Carbon\Carbon::parse($item['tanggal'])->format('d M Y') }}
-                                        </td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">
-                                            {{ $item['jam_check_in'] }}
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <span
-                                                class="inline-flex px-2 py-1 text-xs font-semibold text-orange-600 bg-orange-100 rounded-full">
-                                                {{ $item['menit_terlambat'] }} menit
-                                            </span>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">
-                                            {{ $item['keterangan'] }}
-                                        </td>
-                                        <td class="px-4 py-3 text-sm font-semibold text-right text-red-600">
-                                            - Rp {{ number_format($item['potongan'], 0, ',', '.') }}
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-
-                                <tfoot class="bg-red-50">
-                                    <tr>
-                                        <td colspan="4"
-                                            class="px-4 py-3 text-sm font-semibold text-right text-gray-700">
-                                            Total Potongan Keterlambatan:
-                                        </td>
-                                        <td class="px-4 py-3 text-sm font-bold text-right text-red-600">
-                                            - Rp {{ number_format($totalPotonganTerlambat, 0, ',', '.') }}
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-
-                            <!-- Info potongan per menit -->
-                            <div class="p-4 mt-4 bg-blue-50 rounded-lg">
-                                <div class="flex items-start gap-2">
-                                    <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
+                            @if (empty($dataPotonganTerlambat))
+                                <div class="py-8 text-center">
+                                    <svg class="w-12 h-12 mx-auto text-green-400" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    <div>
-                                        <p class="text-sm font-medium text-blue-900">Informasi Potongan</p>
-                                        <p class="mt-1 text-xs text-blue-700">
-                                            • Shift 1 (08:00 - 12:00): Potongan Rp 15.000/keterlambatan<br>
-                                            • Shift 2 (13:00 - 21:00): Potongan Rp 15.000/keterlambatan
-                                        </p>
+                                    <p class="mt-2 text-gray-500">Tidak ada keterlambatan untuk periode ini</p>
+                                    <p class="mt-1 text-sm text-green-600">Karyawan selalu tepat waktu! 🎉</p>
+                                </div>
+                            @else
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                                                Tanggal</th>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                                                Jam
+                                                Check In</th>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                                                Keterlambatan</th>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                                                Keterangan</th>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-right text-gray-500 uppercase">
+                                                Potongan</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach ($dataPotonganTerlambat as $item)
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-4 py-3 text-sm text-gray-900">
+                                                    {{ Carbon\Carbon::parse($item['tanggal'])->format('d M Y') }}
+                                                </td>
+                                                <td class="px-4 py-3 text-sm text-gray-700">
+                                                    {{ $item['jam_check_in'] }}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    <span
+                                                        class="inline-flex px-2 py-1 text-xs font-semibold text-orange-600 bg-orange-100 rounded-full">
+                                                        {{ $item['menit_terlambat'] }} menit
+                                                    </span>
+                                                </td>
+                                                <td class="px-4 py-3 text-sm text-gray-700">
+                                                    {{ $item['keterangan'] }}
+                                                </td>
+                                                <td class="px-4 py-3 text-sm font-semibold text-right text-red-600">
+                                                    - Rp {{ number_format($item['potongan'], 0, ',', '.') }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                    <tfoot class="bg-red-50">
+                                        <tr>
+                                            <td colspan="4"
+                                                class="px-4 py-3 text-sm font-semibold text-right text-gray-700">
+                                                Total Potongan Keterlambatan:
+                                            </td>
+                                            <td class="px-4 py-3 text-sm font-bold text-right text-red-600">
+                                                - Rp {{ number_format($totalPotonganTerlambat, 0, ',', '.') }}
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+                                <!-- Info potongan per menit -->
+                                <div class="p-4 mt-4 rounded-lg bg-blue-50">
+                                    <div class="flex items-start gap-2">
+                                        <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <div>
+                                            <p class="text-sm font-medium text-blue-900">Informasi Potongan</p>
+                                            <p class="mt-1 text-xs text-blue-700">
+                                                • Shift 1 (08:00 - 12:00): Potongan Rp 15.000/keterlambatan<br>
+                                                • Shift 2 (13:00 - 21:00): Potongan Rp 15.000/keterlambatan
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             @endif
                         </div>
                     </div>
@@ -350,83 +359,92 @@
                         </div>
 
                         <div class="p-6 overflow-x-auto">
-                            @if($potongans->isEmpty())
-                            <div class="py-8 text-center">
-                                <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                <p class="mt-2 text-gray-500">Belum ada potongan atau tambahan lainnya</p>
-                                <p class="mt-1 text-sm text-gray-400">Klik tombol "Tambah" untuk menambahkan data</p>
-                            </div>
+                            @if ($potongans->isEmpty())
+                                <div class="py-8 text-center">
+                                    <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    <p class="mt-2 text-gray-500">Belum ada potongan atau tambahan lainnya</p>
+                                    <p class="mt-1 text-sm text-gray-400">Klik tombol "Tambah" untuk menambahkan data
+                                    </p>
+                                </div>
                             @else
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
-                                            Tanggal</th>
-                                        <th class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
-                                            Divisi</th>
-                                        <th class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
-                                            Keterangan</th>
-                                        <th class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
-                                            Jenis</th>
-                                        <th class="px-4 py-3 text-xs font-medium text-right text-gray-500 uppercase">
-                                            Nominal</th>
-                                    </tr>
-                                </thead>
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                                                Tanggal</th>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                                                Divisi</th>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                                                Keterangan</th>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-left text-gray-500 uppercase">
+                                                Jenis</th>
+                                            <th
+                                                class="px-4 py-3 text-xs font-medium text-right text-gray-500 uppercase">
+                                                Nominal</th>
+                                        </tr>
+                                    </thead>
 
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    @foreach($potongans as $item)
-                                    <tr class="hover:bg-gray-50">
-                                        <td class="px-4 py-3 text-sm text-gray-900">{{ $item->tanggal->format('d M Y')
-                                            }}</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">{{ $item->divisi }}</td>
-                                        <td class="px-4 py-3 text-sm text-gray-700">{{ $item->keterangan }}</td>
-                                        <td class="px-4 py-3">
-                                            @if($item->jenis === 'potongan')
-                                            <span
-                                                class="inline-flex px-2 py-1 text-xs font-semibold text-red-600 bg-red-100 rounded-full">
-                                                Potongan
-                                            </span>
-                                            @else
-                                            <span
-                                                class="inline-flex px-2 py-1 text-xs font-semibold text-green-600 bg-green-100 rounded-full">
-                                                Tambahan
-                                            </span>
-                                            @endif
-                                        </td>
-                                        <td
-                                            class="px-4 py-3 text-sm font-semibold text-right {{ $item->jenis === 'potongan' ? 'text-red-600' : 'text-green-600' }}">
-                                            {{ $item->jenis === 'potongan' ? '-' : '+' }} Rp {{
-                                            number_format($item->amount, 0, ',', '.') }}
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach ($potongans as $item)
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-4 py-3 text-sm text-gray-900">
+                                                    {{ $item->tanggal->format('d M Y') }}</td>
+                                                <td class="px-4 py-3 text-sm text-gray-700">{{ $item->divisi }}</td>
+                                                <td class="px-4 py-3 text-sm text-gray-700">{{ $item->keterangan }}
+                                                </td>
+                                                <td class="px-4 py-3">
+                                                    @if ($item->jenis === 'potongan')
+                                                        <span
+                                                            class="inline-flex px-2 py-1 text-xs font-semibold text-red-600 bg-red-100 rounded-full">
+                                                            Potongan
+                                                        </span>
+                                                    @else
+                                                        <span
+                                                            class="inline-flex px-2 py-1 text-xs font-semibold text-green-600 bg-green-100 rounded-full">
+                                                            Tambahan
+                                                        </span>
+                                                    @endif
+                                                </td>
+                                                <td
+                                                    class="px-4 py-3 text-sm font-semibold text-right {{ $item->jenis === 'potongan' ? 'text-red-600' : 'text-green-600' }}">
+                                                    {{ $item->jenis === 'potongan' ? '-' : '+' }} Rp
+                                                    {{ number_format($item->amount, 0, ',', '.') }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
 
-                                <tfoot class="bg-gray-50">
-                                    @if($totalPotonganLain > 0)
-                                    <tr>
-                                        <td colspan="4"
-                                            class="px-4 py-3 text-sm font-semibold text-right text-gray-700">Total
-                                            Potongan Lain:</td>
-                                        <td class="px-4 py-3 text-sm font-bold text-right text-red-600">- Rp {{
-                                            number_format($totalPotonganLain, 0, ',', '.') }}</td>
-                                    </tr>
-                                    @endif
-                                    @if($totalTambahan > 0)
-                                    <tr>
-                                        <td colspan="4"
-                                            class="px-4 py-3 text-sm font-semibold text-right text-gray-700">Total
-                                            Tambahan:</td>
-                                        <td class="px-4 py-3 text-sm font-bold text-right text-green-600">+ Rp {{
-                                            number_format($totalTambahan, 0, ',', '.') }}</td>
-                                    </tr>
-                                    @endif
-                                </tfoot>
-                            </table>
+                                    <tfoot class="bg-gray-50">
+                                        @if ($totalPotonganLain > 0)
+                                            <tr>
+                                                <td colspan="4"
+                                                    class="px-4 py-3 text-sm font-semibold text-right text-gray-700">
+                                                    Total
+                                                    Potongan Lain:</td>
+                                                <td class="px-4 py-3 text-sm font-bold text-right text-red-600">- Rp
+                                                    {{ number_format($totalPotonganLain, 0, ',', '.') }}</td>
+                                            </tr>
+                                        @endif
+                                        @if ($totalTambahan > 0)
+                                            <tr>
+                                                <td colspan="4"
+                                                    class="px-4 py-3 text-sm font-semibold text-right text-gray-700">
+                                                    Total
+                                                    Tambahan:</td>
+                                                <td class="px-4 py-3 text-sm font-bold text-right text-green-600">+ Rp
+                                                    {{ number_format($totalTambahan, 0, ',', '.') }}</td>
+                                            </tr>
+                                        @endif
+                                    </tfoot>
+                                </table>
                             @endif
                         </div>
                     </div>
@@ -442,40 +460,40 @@
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-sm">Potongan Keterlambatan</span>
-                                    <span class="text-sm font-semibold text-red-200">- Rp {{
-                                        number_format($totalPotonganTerlambat, 0, ',', '.') }}</span>
+                                    <span class="text-sm font-semibold text-red-200">- Rp
+                                        {{ number_format($totalPotonganTerlambat, 0, ',', '.') }}</span>
                                 </div>
                                 <div class="flex items-center justify-between">
                                     <span class="text-sm">Potongan Lainnya</span>
-                                    <span class="text-sm font-semibold text-red-200">- Rp {{
-                                        number_format($totalPotonganLain, 0, ',', '.') }}</span>
+                                    <span class="text-sm font-semibold text-red-200">- Rp
+                                        {{ number_format($totalPotonganLain, 0, ',', '.') }}</span>
                                 </div>
                                 <div class="flex items-center justify-between pb-2 border-b border-blue-400">
                                     <span class="text-sm">Tambahan</span>
-                                    <span class="text-sm font-semibold text-green-200">+ Rp {{
-                                        number_format($totalTambahan, 0, ',', '.') }}</span>
+                                    <span class="text-sm font-semibold text-green-200">+ Rp
+                                        {{ number_format($totalTambahan, 0, ',', '.') }}</span>
                                 </div>
                                 <div class="flex items-center justify-between pt-2">
                                     <span class="text-lg font-bold">Gaji Bersih</span>
-                                    <span class="text-2xl font-bold">Rp {{ number_format($gajiBersih, 0, ',', '.')
-                                        }}</span>
+                                    <span class="text-2xl font-bold">Rp
+                                        {{ number_format($gajiBersih, 0, ',', '.') }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Notes Card -->
-                    @if($gajihPokok->keterangan)
-                    <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div class="p-6 border-b border-gray-200">
-                            <h3 class="text-lg font-semibold text-gray-900">Keterangan</h3>
-                        </div>
-                        <div class="p-6">
-                            <div class="p-4 bg-gray-50 rounded-lg">
-                                <p class="text-gray-700">{{ $gajihPokok->keterangan }}</p>
+                    @if ($gajihPokok->keterangan)
+                        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                            <div class="p-6 border-b border-gray-200">
+                                <h3 class="text-lg font-semibold text-gray-900">Keterangan</h3>
+                            </div>
+                            <div class="p-6">
+                                <div class="p-4 rounded-lg bg-gray-50">
+                                    <p class="text-gray-700">{{ $gajihPokok->keterangan }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endif
                 </div>
 
@@ -516,8 +534,9 @@
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-600">Status</p>
-                                        <p class="font-semibold text-gray-900">{{
-                                            $gajihPokok->branchUser->user->is_active ? 'Aktif' : 'Tidak Aktif' }}</p>
+                                        <p class="font-semibold text-gray-900">
+                                            {{ $gajihPokok->branchUser->user->is_active ? 'Aktif' : 'Tidak Aktif' }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -533,8 +552,8 @@
                                     </div>
                                     <div>
                                         <p class="text-sm text-gray-600">Cabang</p>
-                                        <p class="font-semibold text-gray-900">{{ $gajihPokok->branchUser->branch->name
-                                            }}</p>
+                                        <p class="font-semibold text-gray-900">
+                                            {{ $gajihPokok->branchUser->branch->name }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -565,47 +584,50 @@
                         </div>
                         <div class="p-6">
                             <div class="space-y-3">
-                                @foreach($riwayatGaji as $index => $riwayat)
-                                <a href="{{ route('gaji-saya.show', ['gajihPokok' => $initialGajihPokok->id, 'bulan' => $riwayat->bulan, 'tahun' => $riwayat->tahun]) }}"
-                                    class="block transition-all hover:shadow-md">
-                                    <div
-                                        class="flex items-center justify-between p-4 border rounded-lg {{ ($riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun == $gajihPokok->tahun) ? 'bg-blue-50 border-blue-300 ring-2 ring-blue-200' : 'bg-gray-50 border-gray-200 hover:border-blue-300' }}">
-                                        <div>
-                                            <p
-                                                class="font-semibold {{ ($riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun == $gajihPokok->tahun) ? 'text-blue-900' : 'text-gray-900' }}">
-                                                {{ $riwayat->periode }}
-                                            </p>
-                                            <p
-                                                class="text-sm {{ ($riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun == $gajihPokok->tahun) ? 'text-blue-600' : 'text-gray-600' }}">
-                                                {{ ($riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun ==
-                                                $gajihPokok->tahun) ? 'Periode Aktif' : ($index === 1 ? 'Periode
-                                                Sebelumnya' : $index . ' bulan lalu') }}
-                                            </p>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            {{-- <div class="text-right">
+                                @foreach ($riwayatGaji as $index => $riwayat)
+                                    <a href="{{ route('gaji-saya.show', ['gajihPokok' => $initialGajihPokok->id, 'bulan' => $riwayat->bulan, 'tahun' => $riwayat->tahun]) }}"
+                                        class="block transition-all hover:shadow-md">
+                                        <div
+                                            class="flex items-center justify-between p-4 border rounded-lg {{ $riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun == $gajihPokok->tahun ? 'bg-blue-50 border-blue-300 ring-2 ring-blue-200' : 'bg-gray-50 border-gray-200 hover:border-blue-300' }}">
+                                            <div>
+                                                <p
+                                                    class="font-semibold {{ $riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun == $gajihPokok->tahun ? 'text-blue-900' : 'text-gray-900' }}">
+                                                    {{ $riwayat->periode }}
+                                                </p>
+                                                <p
+                                                    class="text-sm {{ $riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun == $gajihPokok->tahun ? 'text-blue-600' : 'text-gray-600' }}">
+                                                    {{ $riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun == $gajihPokok->tahun
+                                                        ? 'Periode Aktif'
+                                                        : ($index === 1
+                                                            ? 'Periode
+                                                                                                                                                                                                            Sebelumnya'
+                                                            : $index . ' bulan lalu') }}
+                                                </p>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                {{-- <div class="text-right">
                                                 <p
                                                     class="font-bold {{ ($riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun == $gajihPokok->tahun) ? 'text-blue-600' : 'text-gray-700' }}">
                                                     Rp {{ number_format($riwayat->total_gaji_kotor, 0, ',', '.') }}
                                                 </p>
                                             </div> --}}
-                                            @if($riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun ==
-                                            $gajihPokok->tahun)
-                                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
-                                            @else
-                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M9 5l7 7-7 7" />
-                                            </svg>
-                                            @endif
+                                                @if ($riwayat->bulan == $gajihPokok->bulan && $riwayat->tahun == $gajihPokok->tahun)
+                                                    <svg class="w-5 h-5 text-blue-600" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg>
+                                                @else
+                                                    <svg class="w-5 h-5 text-gray-400" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
+                                    </a>
                                 @endforeach
                             </div>
                         </div>
@@ -671,14 +693,17 @@
     </div>
 
     @push('scripts')
-    <script>
-        // Smooth scroll ke top saat memilih periode
-        document.addEventListener('DOMContentLoaded', function() {
-            const params = new URLSearchParams(window.location.search);
-            if (params.has('bulan') && params.has('tahun')) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-    </script>
+        <script>
+            // Smooth scroll ke top saat memilih periode
+            document.addEventListener('DOMContentLoaded', function() {
+                const params = new URLSearchParams(window.location.search);
+                if (params.has('bulan') && params.has('tahun')) {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        </script>
     @endpush
 </x-app-layout>

@@ -30,10 +30,10 @@
 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+            <div class="bg-white shadow-sm sm:rounded-lg">
                 <div class="p-6">
                     <h3 class="mb-6 text-lg font-semibold text-gray-800">Data Pengguna</h3>
-                    <form method="GET" action="{{ route('users.index') }}" class="flex gap-4 mb-6">
+                    <form method="GET" action="{{ route('users.index') }}" class="flex flex-wrap gap-4 mb-6">
                         {{-- PER PAGE --}}
                         <div class="relative">
                             <select name="per_page" onchange="this.form.submit()"

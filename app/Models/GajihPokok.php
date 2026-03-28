@@ -115,8 +115,8 @@ class GajihPokok extends Model
     public function getTotalGajiKotorAttribute()
     {
         return $this->amount + $this->total_tunjangan +
-            $this->total_revenue - $this->total_potongan_bpjs - $this->simpanan - $this->bonus_kpi;
-            // $this->total_revenue - $this->total_potongan_bpjs - $this->simpanan - $this->total_kpi;
+            $this->total_kpi - $this->total_potongan_bpjs - $this->simpanan - $this->bonus_kpi;
+        // $this->total_revenue - $this->total_potongan_bpjs - $this->simpanan - $this->total_kpi;
     }
 
     /**

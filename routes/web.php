@@ -14,6 +14,7 @@ use App\Http\Controllers\Payroll\PayrollController;
 use App\Http\Controllers\Payroll\PotonganController;
 use App\Http\Controllers\Payroll\PotonganImportController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\PresensiExportController;
 use App\Http\Controllers\PresensiImportController;
 use App\Http\Controllers\PresensiKaryawanController;
 use App\Http\Controllers\ProfileController;
@@ -334,11 +335,55 @@ Route::middleware('auth')->group(function () {
         | PRESENSI
         |--------------------------------------------------------------------------
         */
-        Route::get('/presensi/template', [PresensiImportController::class, 'template'])->name('presensi.template');
+        // ✅ SEMUA ROUTE SPESIFIK DULU SEBELUM RESOURCE
+        Route::get('/presensi/template', [PresensiImportController::class, 'template'])
+            ->name('presensi.template');
+
+        Route::post('/presensi/export/all', [PresensiExportController::class, 'exportAll'])
+            ->name('presensi.export.all');
+
+        Route::get('/presensi/export/download/{token}', [PresensiExportController::class, 'download'])
+            ->name('presensi.export.download');
+
+        Route::post('/presensi/{userId}/export', [PresensiExportController::class, 'exportUser'])
+            ->name('presensi.export.user');
+
+        Route::post('/presensi/{user}/izin', [PresensiController::class, 'storeIzin'])
+            ->name('presensi.izin');
+
+        Route::post('/presensi/{user}/sakit', [PresensiController::class, 'storeSakit'])
+            ->name('presensi.sakit');
+
+        Route::post('/presensi-import', [PresensiImportController::class, 'store'])
+            ->name('presensi.import');
+
+        // ✅ RESOURCE PALING BAWAH
         Route::resource('presensi', PresensiController::class);
-        Route::post('/presensi/{user}/izin', [PresensiController::class, 'storeIzin'])->name('presensi.izin');
-        Route::post('/presensi/{user}/sakit', [PresensiController::class, 'storeSakit'])->name('presensi.sakit');
-        Route::post('/presensi-import', [PresensiImportController::class, 'store'])->name('presensi.import');
+        // Route::post('/presensi/export/all', [PresensiExportController::class, 'exportAll'])
+        //     ->name('presensi.export.all');
+
+        // Route::get('/presensi/export/download/{token}', [PresensiExportController::class, 'download'])
+        //     ->name('presensi.export.download');
+
+        // // ----- Export Perorangan (dari halaman show) -----
+        // Route::post('/presensi/{userId}/export', [PresensiExportController::class, 'exportUser'])
+        //     ->name('presensi.export.user');
+
+        // Route::get('/presensi/template', [PresensiImportController::class, 'template'])->name('presensi.template');
+        // Route::post('/presensi/{user}/izin', [PresensiController::class, 'storeIzin'])->name('presensi.izin');
+        // Route::post('/presensi/{user}/sakit', [PresensiController::class, 'storeSakit'])->name('presensi.sakit');
+        // Route::post('/presensi-import', [PresensiImportController::class, 'store'])->name('presensi.import');
+        // Route::resource('presensi', PresensiController::class);
+
+        // ----- Export All (dari halaman index) -----
+        // Route::post('/presensi/export/all', [PresensiExportController::class, 'exportAll'])
+        //     ->name('presensi.export.all');
+
+        // Route::get('/presensi/export/progress/{progressKey}', [PresensiExportController::class, 'progress'])
+        //     ->name('presensi.export.progress');
+
+        // Route::get('/presensi/export/download/{progressKey}', [PresensiExportController::class, 'download'])
+        //     ->name('presensi.export.download');
 
         /*
         |--------------------------------------------------------------------------

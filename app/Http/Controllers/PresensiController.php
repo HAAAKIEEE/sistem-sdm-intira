@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Presensi;
 use App\Models\User;
 use Carbon\Carbon;
+// use Illuminate\Container\Attributes\Storage;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -182,6 +184,7 @@ class PresensiController extends Controller
             ->whereDate('tanggal', $tanggal)
             ->get()
             ->keyBy('status');
+        // dd($presensis);
 
         $statuses = ['CHECK_IN', 'ISTIRAHAT_OUT', 'ISTIRAHAT_IN', 'CHECK_OUT'];
 
@@ -194,15 +197,38 @@ class PresensiController extends Controller
                     : null,
                 'wilayah'    => $presensis->get($status)?->wilayah ?? null,
                 'keterangan' => $presensis->get($status)?->keterangan ?? null,
+                'photo'      => $presensis->get($status)?->photo ?? null,
             ];
         });
+        // dd($rows);
 
         return view('presensi.show', compact('user', 'tanggal', 'rows', 'branch'));
     }
 
+    // public function destroy($id)
+    // {
+    //     $presensi = Presensi::findOrFail($id);
+
+    //     // Hapus foto jika ada
+    //     if ($presensi->photo && Storage::exists($presensi->photo)) {
+    //         Storage::delete($presensi->photo);
+    //     }
+
+    //     // Hapus data
+    //     $presensi->delete();
+
+    //     return back()->with('success', 'Data presensi berhasil dihapus');
+    // }
     public function destroy($id)
     {
         $presensi = Presensi::findOrFail($id);
+
+        // Hapus foto dari storage
+        if ($presensi->photo && Storage::disk('public')->exists($presensi->photo)) {
+            Storage::disk('public')->delete($presensi->photo);
+        }
+
+        // Hapus data database
         $presensi->delete();
 
         return back()->with('success', 'Data presensi berhasil dihapus');

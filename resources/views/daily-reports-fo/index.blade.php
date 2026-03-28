@@ -54,7 +54,7 @@
                                     <div class="ml-3">
                                         <p class="font-semibold text-gray-800">🌅 Shift Pagi</p>
                                         <p class="text-sm text-gray-600">08:00 - 16:00</p>
-                                        <p class="text-xs text-gray-500">Laporan: 10:00, 12:00, 14:00, 16:00</p>
+                                        <p class="text-xs text-gray-500">Laporan: 10:00, 11:30, 14:00, 16:00</p>
                                     </div>
                                 </label>
                                 <label
@@ -63,8 +63,8 @@
                                         class="w-5 h-5 text-purple-600">
                                     <div class="ml-3">
                                         <p class="font-semibold text-gray-800">🌆 Shift Siang</p>
-                                        <p class="text-sm text-gray-600">14:00 - 22:00</p>
-                                        <p class="text-xs text-gray-500">Laporan: 15:00, 17:00, 19:00, 21:00</p>
+                                        <p class="text-sm text-gray-600">13:00 - 21:00</p>
+                                        <p class="text-xs text-gray-500">Laporan: 14:00, 16:00, 17:30, 20:00</p>
                                     </div>
                                 </label>
                             </div>
@@ -302,7 +302,8 @@
                                     @if ($report->validation)
                                         <div class="pt-3 mt-3 border-t border-gray-200">
                                             <p class="text-xs text-gray-500">
-                                                <strong>Tindakan:</strong> {{ $report->validation->actions->pluck('name')->join(', ') }}
+                                                <strong>Tindakan:</strong>
+                                                {{ $report->validation->actions->pluck('name')->join(', ') }}
                                                 &nbsp;·&nbsp;
                                                 {{ $report->validation->validated_at->format('H:i') }}
                                             </p>
@@ -315,7 +316,8 @@
                                     @endif
 
                                     {{-- Action Button --}}
-                                    <div class="mt-3">
+                                    {{-- Action Button --}}
+                                    <div class="flex items-center gap-2 mt-3">
                                         @if ($slot['can_edit'])
                                             <a href="{{ route('daily-reports-fo.slot.show', $slot['slot_number']) }}"
                                                 class="flex items-center gap-2 px-4 py-2 text-sm text-white transition bg-blue-600 rounded-lg hover:bg-blue-700 w-fit">
@@ -324,7 +326,30 @@
                                         @else
                                             <span class="text-xs text-gray-400">Window edit sudah tutup</span>
                                         @endif
+
+                                        {{-- Tombol Copy --}}
+                                        <button onclick="copyLaporan(this)" {{-- data-upload="{{ $report->uploaded_at->format('H:i:s') }}" --}}
+                                            data-nama="{{ $report->user->name }}"
+                                            data-cabang="{{ $report->user->getActiveBranch()?->name ?? '-' }}"
+                                            {{-- data-foto="{{ $report->total_photos }}" --}}
+                                            data-omset="{{ $metrikDetails->has('mb_omset') ? number_format($metrikDetails['mb_omset']->value_number, 0, ',', '.') : '' }}"
+                                            data-revenue="{{ $metrikDetails->has('mb_revenue') ? number_format($metrikDetails['mb_revenue']->value_number, 0, ',', '.') : '' }}"
+                                            data-akad="{{ $metrikDetails->has('mb_jumlah_akad') ? number_format($metrikDetails['mb_jumlah_akad']->value_number, 0, ',', '.') : '' }}"
+                                            data-catatan="{{ $report->validation?->catatan ?? '' }}"
+                                            class="flex items-center gap-1 px-3 py-2 text-sm text-gray-600 transition bg-white border border-gray-300 rounded-lg hover:bg-gray-50 w-fit">
+                                            📋 <span class="label">Copy</span>
+                                        </button>
                                     </div>
+                                    {{-- <div class="mt-3">
+                                        @if ($slot['can_edit'])
+                                            <a href="{{ route('daily-reports-fo.slot.show', $slot['slot_number']) }}"
+                                                class="flex items-center gap-2 px-4 py-2 text-sm text-white transition bg-blue-600 rounded-lg hover:bg-blue-700 w-fit">
+                                                ✏️ Edit Laporan
+                                            </a>
+                                        @else
+                                            <span class="text-xs text-gray-400">Window edit sudah tutup</span>
+                                        @endif
+                                    </div> --}}
                                 </div>
                             @elseif ($slot['status'] === 'open')
                                 <div class="p-4 rounded-lg bg-orange-50">
@@ -406,6 +431,49 @@
                 el.textContent =
                     `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
             });
+        };
+
+        function copyLaporan(btn) {
+            const lines = ['📋 *Laporan Per 2 Jam*'];
+
+            lines.push('👤 Nama: ' + btn.dataset.nama);
+            lines.push('🏢 Cabang: ' + btn.dataset.cabang);
+            // lines.push('📅 Upload: ' + btn.dataset.upload);
+            // lines.push('📷 Foto: ' + btn.dataset.foto);
+
+            if (btn.dataset.omset) lines.push('💰 Omset: Rp ' + btn.dataset.omset);
+            if (btn.dataset.revenue) lines.push('📈 Revenue: Rp ' + btn.dataset.revenue);
+            if (btn.dataset.akad) lines.push('🤝 Akad: ' + btn.dataset.akad);
+            if (btn.dataset.catatan) lines.push('📝 Catatan: ' + btn.dataset.catatan);
+
+            const text = lines.join('\n');
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => berhasilCopy(btn));
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                berhasilCopy(btn);
+            }
+        }
+
+        function berhasilCopy(btn) {
+            const label = btn.querySelector('.label');
+            label.textContent = 'Tersalin!';
+            btn.classList.replace('text-gray-600', 'text-green-600');
+            btn.classList.replace('border-gray-300', 'border-green-400');
+            setTimeout(() => {
+                label.textContent = 'Copy';
+                btn.classList.replace('text-green-600', 'text-gray-600');
+                btn.classList.replace('border-green-400', 'border-gray-300');
+            }, 2000);
         }
 
         setInterval(updateCountdowns, 1000);
