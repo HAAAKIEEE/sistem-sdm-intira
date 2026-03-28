@@ -20,135 +20,6 @@ class ValidationController extends Controller
      * Dashboard validasi manager
      * Tampilkan laporan dengan filter, fokus pada Metrik Bisnis
      */
-    // public function index(Request $request)
-    // {
-    //     $user = Auth::user();
-
-    //     // Tentukan cabang yang bisa diakses
-    //     if ($user->hasRole('superadmin') || $user->hasRole('marketing')) {
-    //         $accessibleBranches = Branch::orderBy('name')->get();
-    //     } else {
-    //         // Manager: hanya cabang yang dikelolanya
-    //         $accessibleBranches = $user->managedBranches()->orderBy('name')->get();
-    //     }
-
-    //     if ($accessibleBranches->isEmpty()) {
-    //         return back()->with('error', 'Anda tidak memiliki akses ke cabang manapun.');
-    //     }
-
-    //     // Filter dari request
-    //     // branch_id = 'all' untuk superadmin/marketing yang mau lihat semua cabang
-    //     $branchIdParam = $request->input('branch_id', $accessibleBranches->first()->id);
-    //     $tanggal = $request->input('tanggal', now()->toDateString());
-    //     $validationStatusFilter = $request->input('validation_status');
-    //     $shiftFilter = $request->input('shift');
-    //     $perPage = (int) $request->input('per_page', 25);
-
-    //     $isAllBranches = $branchIdParam === 'all'
-    //         && ($user->hasRole('superadmin') || $user->hasRole('marketing'));
-
-    //     // Resolve selectedBranch (null jika "all")
-    //     $selectedBranch = null;
-    //     if (! $isAllBranches) {
-    //         $selectedBranch = $accessibleBranches->find($branchIdParam);
-    //         if (! $selectedBranch) {
-    //             abort(403, 'Anda tidak memiliki akses ke cabang ini.');
-    //         }
-    //     }
-
-    //     // -------------------------------------------------------
-    //     // Base query
-    //     // -------------------------------------------------------
-    //     $baseQuery = DailyReportFo::query()
-    //         ->whereDate('tanggal', $tanggal);
-
-    //     if ($isAllBranches) {
-    //         // Superadmin/marketing: semua cabang
-    //         $baseQuery->whereIn('branch_id', $accessibleBranches->pluck('id'));
-    //     } else {
-    //         $baseQuery->where('branch_id', $selectedBranch->id);
-    //     }
-
-    //     // -------------------------------------------------------
-    //     // Stats — hitung sebelum filter status/shift
-    //     // -------------------------------------------------------
-    //     $statsBase = (clone $baseQuery);
-
-    //     // Hitung total metrik bisnis dari detail
-    //     $metrikFieldCodes = ['mb_omset', 'mb_revenue', 'mb_jumlah_akad'];
-
-    //     $metrikTotals = \App\Models\DailyReportFODetail::query()
-    //         ->whereHas('report', function ($q) use ($tanggal, $isAllBranches, $selectedBranch, $accessibleBranches) {
-    //             $q->whereDate('tanggal', $tanggal);
-    //             if ($isAllBranches) {
-    //                 $q->whereIn('branch_id', $accessibleBranches->pluck('id'));
-    //             } else {
-    //                 $q->where('branch_id', $selectedBranch->id);
-    //             }
-    //         })
-    //         ->whereHas('field', function ($q) use ($metrikFieldCodes) {
-    //             $q->whereIn('code', $metrikFieldCodes);
-    //         })
-    //         ->with('field')
-    //         ->get()
-    //         ->groupBy(fn ($d) => $d->field->code)
-    //         ->map(fn ($group) => $group->sum('value_number'));
-
-    //     $stats = [
-    //         'total' => (clone $statsBase)->count(),
-    //         'pending' => (clone $statsBase)->where('validation_status', 'pending')->count(),
-    //         'approved' => (clone $statsBase)->where('validation_status', 'approved')->count(),
-    //         'rejected' => (clone $statsBase)->where('validation_status', 'rejected')->count(),
-    //         'total_omset' => $metrikTotals->get('mb_omset', 0),
-    //         'total_revenue' => $metrikTotals->get('mb_revenue', 0),
-    //         'total_akad' => $metrikTotals->get('mb_jumlah_akad', 0),
-    //     ];
-
-    //     // -------------------------------------------------------
-    //     // Query laporan dengan filter tambahan
-    //     // -------------------------------------------------------
-    //     $reportQuery = (clone $baseQuery)
-    //         ->with([
-    //             'user',
-    //             'branch',
-    //             'validation.manager',
-    //             'validation.action',
-    //             'details' => function ($q) {
-    //                 $q->whereHas('field.category', function ($q) {
-    //                     $q->where('code', 'metrik_bisnis');
-    //                 })->with('field');
-    //             },
-    //         ]);
-
-    //     if ($validationStatusFilter) {
-    //         $reportQuery->where('validation_status', $validationStatusFilter);
-    //     }
-
-    //     if ($shiftFilter) {
-    //         $reportQuery->where('shift', $shiftFilter);
-    //     }
-
-    //     $reports = $reportQuery
-    //         ->orderBy('shift', 'asc')
-    //         ->orderBy('slot', 'asc')
-    //         ->orderBy('uploaded_at', 'asc')
-    //         ->paginate($perPage)
-    //         ->withQueryString();
-
-    //     return view('daily-reports-fo.validation.index', [
-    //         'accessibleBranches' => $accessibleBranches,
-    //         'selectedBranch' => $selectedBranch,       // null jika "all"
-    //         'isAllBranches' => $isAllBranches,
-    //         'branchIdParam' => $branchIdParam,
-    //         'tanggal' => $tanggal,
-    //         'reports' => $reports,
-    //         'stats' => $stats,
-    //         'canValidate' => ! $user->hasRole('marketing'),
-    //         'isSuperadmin' => $user->hasRole('superadmin'),
-    //         'canViewAll' => $user->hasRole('superadmin') || $user->hasRole('marketing'),
-    //     ]);
-    // }
-    // Ganti method index() di ValidationController:
 
     public function index(Request $request)
     {
@@ -198,6 +69,12 @@ class ValidationController extends Controller
         if (! $isAllBranches) {
             $baseQuery->where('branch_id', $selectedBranch->id);
         }
+
+        // TAMBAH INI UNTUK FILTER VALIDATION STATUS & SHIFT DI BASE QUERY
+        if ($shiftFilter) {
+            $baseQuery->where('shift', $shiftFilter);
+        }
+
 
         // -------------------------------------------------------
         // Stats
@@ -271,113 +148,6 @@ class ValidationController extends Controller
     /**
      * Show form validasi untuk satu laporan
      */
-    // public function show($reportId)
-    // {
-    //     $user = Auth::user();
-    //     $report = DailyReportFo::with([
-    //         'user',
-    //         'branch',
-    //         'validation.manager',
-    //         'validation.action',
-    //         // Load semua detail untuk ditampilkan
-    //         'details' => function ($q) {
-    //             $q->with(['field.category', 'photos']);
-    //         },
-    //     ])->findOrFail($reportId);
-
-    //     // Cek permission akses
-    //     $this->authorizeAccess($user, $report);
-
-    //     // Cek apakah bisa divalidasi (window manager harus open)
-    //     $canValidate = $this->canValidate($user, $report);
-
-    //     // Load opsi tindakan dari master data
-    //     $validationActions = ValidationAction::active()->ordered()->get();
-
-    //     // Group details by category untuk tampilan
-    //     $detailsByCategory = $report->details->groupBy(function ($detail) {
-    //         return $detail->field->category->name ?? 'Lainnya';
-    //     });
-
-    //     // Ambil detail metrik bisnis
-    //     $metrikDetails = $report->details->filter(function ($detail) {
-    //         return $detail->field->category->code === 'metrik_bisnis';
-    //     })->keyBy(fn ($d) => $d->field->code);
-
-    //     return view('daily-reports-fo.validation.show', [
-    //         'report' => $report,
-    //         'detailsByCategory' => $detailsByCategory,
-    //         'metrikDetails' => $metrikDetails,
-    //         'validationActions' => $validationActions,
-    //         'canValidate' => $canValidate,
-    //         'isSuperadmin' => $user->hasRole('superadmin'),
-    //         'managerWindowStatus' => $report->manager_window_status,
-    //     ]);
-    // }
-
-    /**
-     * Proses validasi (approve/reject) oleh manager
-     */
-    // public function validate(Request $request, $reportId)
-    // {
-    //     $user = Auth::user();
-    //     $report = DailyReportFo::with('validation')->findOrFail($reportId);
-
-    //     // Cek permission
-    //     $this->authorizeAccess($user, $report);
-
-    //     // Marketing tidak bisa validasi
-    //     if ($user->hasRole('marketing')) {
-    //         abort(403, 'Marketing tidak memiliki akses untuk memvalidasi laporan.');
-    //     }
-
-    //     // Cek window manager masih buka (kecuali superadmin)
-    //     if (! $user->hasRole('superadmin') && ! $report->isManagerWindowOpen()) {
-    //         return back()->with('error', 'Window validasi sudah ditutup.');
-    //     }
-
-    //     // Cek laporan belum divalidasi (kecuali superadmin)
-    //     if (! $user->hasRole('superadmin') && $report->validation_status !== 'pending') {
-    //         return back()->with('error', 'Laporan ini sudah divalidasi.');
-    //     }
-
-    //     // Validasi input
-    //     $validated = $request->validate([
-    //         'status' => 'required|in:approved,rejected',
-    //         'validation_action_id' => 'required|exists:validation_actions,id',
-    //         'catatan' => 'nullable|string|max:500',
-    //     ], [
-    //         'status.required' => 'Status validasi wajib dipilih.',
-    //         'validation_action_id.required' => 'Opsi tindakan wajib dipilih.',
-    //         'validation_action_id.exists' => 'Opsi tindakan tidak valid.',
-    //     ]);
-
-    //     DB::transaction(function () use ($validated, $report, $user) {
-    //         // Hapus validasi lama jika ada (untuk superadmin yang re-validate)
-    //         $report->validation()->delete();
-
-    //         // Buat record validasi baru
-    //         DailyReportFoValidation::create([
-    //             'daily_report_fo_id' => $report->id,
-    //             'manager_id' => $user->id,
-    //             'validation_action_id' => $validated['validation_action_id'],
-    //             'status' => $validated['status'],
-    //             'catatan' => $validated['catatan'] ?? null,
-    //             'validated_at' => now(),
-    //         ]);
-
-    //         // Update status di header laporan
-    //         $report->update([
-    //             'validation_status' => $validated['status'],
-    //         ]);
-    //     });
-
-    //     $statusLabel = $validated['status'] === 'approved' ? 'disetujui' : 'ditolak';
-
-    //     return redirect()
-    //         ->route('validation.index', ['branch_id' => $report->branch_id])
-    //         ->with('success', "Laporan berhasil {$statusLabel}.");
-    // }
 
     /**
      * Reset validasi ke pending (superadmin only)
@@ -459,30 +229,30 @@ class ValidationController extends Controller
         $user = Auth::user();
         $report = DailyReportFo::with(['validation.actions', 'branch'])->findOrFail($reportId);
         // ↑ PENTING: eager load 'validation.actions' untuk edit mode
-    
+
         $this->authorizeAccess($user, $report);
-    
+
         if ($user->hasRole('marketing')) {
             abort(403, 'Marketing tidak memiliki akses untuk memvalidasi laporan.');
         }
-    
+
         // Cek window — isManagerWindowOpen() sudah pakai timezone cabang laporan secara otomatis
         if (! $user->hasRole('superadmin') && ! $report->isManagerWindowOpen()) {
             $status = $report->manager_window_status;
-    
+
             $message = match ($status) {
                 'waiting' => 'Window validasi belum dibuka. Tunggu hingga ' . $report->manager_window_start->format('H:i') . ' ' . $report->branch->timezone . '.',
                 'expired' => 'Window validasi sudah tutup sejak ' . $report->manager_window_end->format('H:i') . ' ' . $report->branch->timezone . '.',
                 default => 'Window validasi tidak tersedia.',
             };
-    
+
             return back()->with('error', $message);
         }
-    
+
         if (! $user->hasRole('superadmin') && $report->validation_status !== 'pending') {
             return back()->with('error', 'Laporan ini sudah divalidasi sebelumnya.');
         }
-    
+
         $validated = $request->validate([
             'status' => 'required|in:approved,rejected',
             'validation_action_ids' => 'required|array|min:1', // ← UBAH: array, min 1
@@ -494,11 +264,11 @@ class ValidationController extends Controller
             'validation_action_ids.min' => 'Minimal pilih 1 tindakan.',
             'validation_action_ids.*.exists' => 'Tindakan tidak valid.',
         ]);
-    
+
         DB::transaction(function () use ($validated, $report, $user) {
             // Hapus validasi lama (cascade delete pivot juga)
             $report->validation()->delete();
-    
+
             // Buat validasi baru
             $validation = DailyReportFoValidation::create([
                 'daily_report_fo_id' => $report->id,
@@ -507,80 +277,20 @@ class ValidationController extends Controller
                 'catatan' => $validated['catatan'] ?? null,
                 'validated_at' => now(),
             ]);
-    
+
             // Attach multiple actions ke pivot table
             $validation->actions()->attach($validated['validation_action_ids']);
-    
+
             // Update status di report
             $report->update(['validation_status' => $validated['status']]);
         });
-    
+
         $statusLabel = $validated['status'] === 'approved' ? 'disetujui' : 'ditolak';
-    
+
         return redirect()
             ->route('validation.index', ['branch_id' => $report->branch_id])
             ->with('success', "Laporan berhasil {$statusLabel}.");
     }
-    // public function validate(Request $request, $reportId)
-    // {
-    //     $user = Auth::user();
-    //     $report = DailyReportFo::with(['validation', 'branch'])->findOrFail($reportId);
-    //     // ↑ PENTING: eager load 'branch' agar getBranchTimezone() tidak N+1 query
-
-    //     $this->authorizeAccess($user, $report);
-
-    //     if ($user->hasRole('marketing')) {
-    //         abort(403, 'Marketing tidak memiliki akses untuk memvalidasi laporan.');
-    //     }
-
-    //     // Cek window — isManagerWindowOpen() sudah pakai timezone cabang laporan secara otomatis
-    //     if (! $user->hasRole('superadmin') && ! $report->isManagerWindowOpen()) {
-    //         $status = $report->manager_window_status;
-
-    //         $message = match ($status) {
-    //             'waiting' => 'Window validasi belum dibuka. Tunggu hingga ' . $report->manager_window_start->format('H:i') . ' ' . $report->branch->timezone . '.',
-    //             'expired' => 'Window validasi sudah tutup sejak ' . $report->manager_window_end->format('H:i') . ' ' . $report->branch->timezone . '.',
-    //             default => 'Window validasi tidak tersedia.',
-    //         };
-
-    //         return back()->with('error', $message);
-    //     }
-
-    //     if (! $user->hasRole('superadmin') && $report->validation_status !== 'pending') {
-    //         return back()->with('error', 'Laporan ini sudah divalidasi sebelumnya.');
-    //     }
-
-    //     $validated = $request->validate([
-    //         'status' => 'required|in:approved,rejected',
-    //         'validation_action_id' => 'required|exists:validation_actions,id',
-    //         'catatan' => 'nullable|string|max:500',
-    //     ], [
-    //         'status.required' => 'Status validasi wajib dipilih.',
-    //         'validation_action_id.required' => 'Opsi tindakan wajib dipilih.',
-    //         'validation_action_id.exists' => 'Opsi tindakan tidak valid.',
-    //     ]);
-
-    //     DB::transaction(function () use ($validated, $report, $user) {
-    //         $report->validation()->delete();
-
-    //         DailyReportFoValidation::create([
-    //             'daily_report_fo_id' => $report->id,
-    //             'manager_id' => $user->id,
-    //             'validation_action_id' => $validated['validation_action_id'],
-    //             'status' => $validated['status'],
-    //             'catatan' => $validated['catatan'] ?? null,
-    //             'validated_at' => now(),
-    //         ]);
-
-    //         $report->update(['validation_status' => $validated['status']]);
-    //     });
-
-    //     $statusLabel = $validated['status'] === 'approved' ? 'disetujui' : 'ditolak';
-
-    //     return redirect()
-    //         ->route('validation.index', ['branch_id' => $report->branch_id])
-    //         ->with('success', "Laporan berhasil {$statusLabel}.");
-    // }
 
     /**
      * Cek apakah user bisa memvalidasi laporan ini

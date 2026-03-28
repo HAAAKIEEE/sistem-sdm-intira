@@ -38,18 +38,16 @@ class GajihPokokImport implements
             $data[$normalizedKey] = trim($value);
         }
 
-        // dd($data);
-
         // ===============================
         // CEGAH PHANTOM ROW
         // ===============================
         if (
             empty($data['email']) &&
-            empty($data['gapok'])
+            empty($data['gaji_pokok'])
         ) {
             return null;
         }
-
+    
         $user = User::where('email', $data['email'])->first();
         if (!$user) {
             throw new \Exception("User dengan email {$data['email']} tidak ditemukan");
@@ -57,6 +55,8 @@ class GajihPokokImport implements
 
         //
         //$bonus_revenue = $data['total_revenue'] * $data['persentase_revenue'] / 100;
+
+        
 
         // ===============================
         // SIMPAN GAJI
@@ -66,21 +66,21 @@ class GajihPokokImport implements
         return new GajihPokok([
             // 'branchuser_id'         => $branchUser->id,
             'user_id'         => $user->id,
-            'golongan'        => $data['gol'],
-            'amount'                 => (int) $data['gapok'],
-            'tunjangan_makan'        => (int) ($data['t_makan'] ?? 0),
-            'tunjangan_transportasi' => (int) ($data['t_transport'] ?? 0),
-            'tunjangan_jabatan'      => (int) ($data['t_jabatan'] ?? 0),
-            'tunjangan_komunikasi'   => (int) ($data['t_komunikasi'] ?? 0),
+            'golongan'        => $data['golongan'],
+            'amount'                 => (int) $data['gaji_pokok'],
+            'tunjangan_makan'        => (int) ($data['tunjangan_makan'] ?? 0),
+            'tunjangan_transportasi' => (int) ($data['tunjangan_transportasi'] ?? 0),
+            'tunjangan_jabatan'      => (int) ($data['tunjangan_jabatan'] ?? 0),
+            'tunjangan_komunikasi'   => (int) ($data['tunjangan_komunikasi'] ?? 0),
             'ptg_bpjs_ketenagakerjaan'   => (int) ($data['potongan_bpjs_ketenagakerjaan'] ?? 0),
             'ptg_bpjs_kesehatan'   => (int) ($data['potongan_bpjs_kesehatan'] ?? 0),
-            'total_revenue'   => (int) ($data['revenue'] ?? 0),
-            'persentase_revenue'     => (int) $data['perc_revenue'],
-            'bonus_revenue'   => (int) ($data['bonus_revenue'] ?? 0),
-            'total_kpi'   => (int) ($data['rev'] ?? 0),
-            'persentase_kpi'     => (int) $data['perc_kpi'],
-            'bonus_kpi'   => (int) abs($data['pot_kpi'] ?? 0),
-            'simpanan'   => (int) abs($data['pot_simpanan'] ?? 0),
+            'total_revenue'   => (int) ($data['total_revenue'] ?? 0),
+            'persentase_revenue'     => (int) $data['persentase_revenue'],
+             'bonus_revenue'   => (int) ($data['bonuse_revenue'] ?? 0),
+            'total_kpi'   => (int) ($data['total_kpi'] ?? 0),
+            'persentase_kpi'     => (int) $data['persentase_kpi'],
+            'bonus_kpi'   => (int) ($data['bonus_kpi'] ?? 0),
+            'simpanan'   => (int) ($data['simpanan'] ?? 0),
             'bulan'                  => (int) $data['bulan'],
             'tahun'                  => (int) $data['tahun'],
             'hari_kerja'                  => (int) $data['hari_kerja'],
@@ -96,7 +96,7 @@ class GajihPokokImport implements
         return [
             'email' => ['required', 'email'],
             // 'cabang'         => ['required', 'string'],
-            'gapok'   => ['required', 'numeric', 'min:0'],
+            'gaji_pokok'   => ['required', 'numeric', 'min:0'],
             'bulan'          => ['required', 'numeric', 'between:1,12'],
             'tahun'          => ['required', 'digits:4'],
         ];
@@ -111,8 +111,8 @@ class GajihPokokImport implements
             'email.required' => 'Email karyawan wajib diisi',
             'email.email'    => 'Format email karyawan tidak valid',
             'cabang.required'         => 'Kode cabang wajib diisi',
-            'gapok.required'   => 'Gaji pokok wajib diisi',
-            'gapok.numeric'    => 'Gaji pokok harus angka',
+            'gaji_pokok.required'   => 'Gaji pokok wajib diisi',
+            'gaji_pokok.numeric'    => 'Gaji pokok harus angka',
             'bulan.numeric'          => 'Bulan wajib diisi',
             'tahun.required'          => 'Tahun wajib diisi',
         ];
