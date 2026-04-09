@@ -40,7 +40,7 @@
                                     <h4 class="text-xl font-bold text-gray-900">
                                         {{ $gajihPokok->branchUser->user->name }}</h4>
                                     <p class="mt-1 text-gray-600">{{ $gajihPokok->branchUser->user->email }}</p>
-                                    <div class="flex items-center gap-2 mt-3">
+                                    {{-- <div class="flex items-center gap-2 mt-3">
                                         @foreach ($gajihPokok->branchUser->user->roles as $role)
                                             <span
                                                 class="px-3 py-1 text-sm font-medium text-purple-700 bg-purple-100 rounded-full">
@@ -53,7 +53,7 @@
                                                 Manager
                                             </span>
                                         @endif
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -224,13 +224,13 @@
                                     <span class="font-medium text-gray-600">Tanggal Input</span>
                                     <span
                                         class="font-semibold text-gray-900">{{ $gajihPokok->created_at->format('d F Y,
-                                                                                                                                                                H:i') }}</span>
+                                                                                                                                                                                                                                                                                        H:i') }}</span>
                                 </div>
                                 <div class="flex items-center justify-between py-3">
                                     <span class="font-medium text-gray-600">Terakhir Update</span>
                                     <span
                                         class="font-semibold text-gray-900">{{ $gajihPokok->updated_at->format('d F Y,
-                                                                                                                                                                H:i') }}</span>
+                                                                                                                                                                                                                                                                                        H:i') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -600,7 +600,7 @@
                                                         ? 'Periode Aktif'
                                                         : ($index === 1
                                                             ? 'Periode
-                                                                                                                                                                                                            Sebelumnya'
+                                                                                                                                                                                                                                                                                                                                                                        Sebelumnya'
                                                             : $index . ' bulan lalu') }}
                                                 </p>
                                             </div>
