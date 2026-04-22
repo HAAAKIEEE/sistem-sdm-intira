@@ -19,7 +19,7 @@ use App\Http\Controllers\PresensiExportController;
 use App\Http\Controllers\PresensiImportController;
 use App\Http\Controllers\PresensiKaryawanController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ThreeHourReportDashboardController;
+use App\Http\Controllers\Superadmin\PresensiPhotoCleanupController;
 // use App\Http\Controllers\Payroll\PotonganImportController;
 use App\Http\Controllers\ThreeHourReportManagerController;
 use App\Http\Controllers\UserController;
@@ -29,7 +29,7 @@ use App\Http\Controllers\ValidationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn() => view('auth.login'));
+Route::get('/', fn() => view('auth.login'))->middleware('guest');
 
 Route::get('/dashboard', function () {
     $today = \Carbon\Carbon::today();
@@ -68,10 +68,14 @@ Route::get('/dashboard', function () {
 
     $topTerlambat = collect();
     foreach ($presensiCheckIn->groupBy('user_id') as $records) {
-        $jumlah = 0; $totalPot = 0;
+        $jumlah = 0;
+        $totalPot = 0;
         foreach ($records as $r) {
             $pot = $r->hitungPotonganTerlambat();
-            if ($pot['menit_terlambat'] > 0) { $jumlah++; $totalPot += $pot['potongan']; }
+            if ($pot['menit_terlambat'] > 0) {
+                $jumlah++;
+                $totalPot += $pot['potongan'];
+            }
         }
         if ($jumlah > 0) {
             $topTerlambat->push((object)['user' => $records->first()->user, 'jumlah_terlambat' => $jumlah, 'total_potongan' => $totalPot]);
@@ -85,15 +89,23 @@ Route::get('/dashboard', function () {
     $reportRejected = (clone $reportToday)->rejected()->count();
 
     return view('dashboard', compact(
-        'totalKaryawan', 'hadirHariIni', 'terlambatHariIni',
-        'presensiTerbaru', 'rekapBulanIni', 'topTerlambat',
-        'reportPending', 'reportApproved', 'reportRejected'
+        'totalKaryawan',
+        'hadirHariIni',
+        'terlambatHariIni',
+        'presensiTerbaru',
+        'rekapBulanIni',
+        'topTerlambat',
+        'reportPending',
+        'reportApproved',
+        'reportRejected'
     ));
 })->middleware(['auth', 'verified'])->name('dashboard');
 // Route::get('/dashboard', fn() => view('dashboard'))
 //     ->middleware(['auth', 'verified'])
 //     ->name('dashboard');
 Route::middleware('auth')->group(function () {
+    Route::get('/gaji-pokok/{gajihPokok}/export-pdf', [GajihPokokController::class, 'exportPdf'])
+        ->name('gaji-pokok.export-pdf');
 
     Route::prefix('absensi')->name('absensi.')->group(function () {
 
@@ -114,6 +126,26 @@ Route::middleware('auth')->group(function () {
     Route::resource('e-learning-karyawan', ELearningKaryawanController::class);
 
     Route::middleware('role:superadmin')->group(function () {
+        Route::prefix('superadmin/absensi/photo-cleanup')
+            ->name('superadmin.absensi.photo-cleanup.')
+            ->group(function () {
+
+                // Halaman utama: preview + riwayat
+                Route::get('/', [PresensiPhotoCleanupController::class, 'index'])
+                    ->name('index');
+
+                // Eksekusi hapus
+                Route::post('/execute', [PresensiPhotoCleanupController::class, 'execute'])
+                    ->name('execute');
+
+                // BARU — preview by range
+                Route::get('/preview-range', [PresensiPhotoCleanupController::class, 'previewRange'])
+                    ->name('preview-range');
+
+                // BARU — eksekusi hapus by range
+                Route::post('/execute-range', [PresensiPhotoCleanupController::class, 'executeRange'])
+                    ->name('execute-range');
+            });
         Route::prefix('superadmin/daily-report-fo/photo-cleanup')
             ->name('superadmin.daily-report-fo.photo-cleanup.')
             ->group(function () {
@@ -206,23 +238,6 @@ Route::middleware('auth')->group(function () {
             // Delete Laporan
             Route::delete('/{dailyReport}', [DailyReportController::class, 'destroy'])->name('destroy');
         });
-
-        // Route::prefix('daily-reports-3hour-manager')->name('daily-reports.3hour-manager.')->group(function () {
-        //     // Dashboard & List Laporan
-        //     Route::get('/create', [ThreeHourReportManagerController::class, 'create'])->name('create');
-        // });
-
-        // File: routes/web.php
-        // Tambahkan di dalam group Route yang sudah ada
-
-        // Route::prefix('daily-reports-3hour-manager')->name('daily-reports.3hour-manager.')->group(function () {
-        //     // Dashboard & List Laporan
-        //     Route::get('/', [ThreeHourReportManagerController::class, 'index'])->name('index');
-        //     // Form Input
-        //     Route::get('/create', [ThreeHourReportManagerController::class, 'create'])->name('create');
-        //     // Simpan Laporan
-        //     Route::post('/', [ThreeHourReportManagerController::class, 'store'])->name('store');
-        // });
     });
     Route::middleware('role:fo|superadmin|marketing')->group(function () {
         Route::get('/branches/search', [BranchController::class, 'search'])->name('branches.search');
@@ -249,34 +264,6 @@ Route::middleware('auth')->group(function () {
 
             // Reset validasi ke pending — superadmin only
             Route::delete('/{reportId}/reset', [ValidationController::class, 'reset'])->name('reset');
-        });
-
-        Route::prefix('daily-reports-3hour-manager')->name('daily-reports.3hour-manager.')->group(function () {
-            // Dashboard (All Roles: manager, superadmin, marketing)
-            Route::get('/', [ThreeHourReportDashboardController::class, 'index'])
-                ->name('index');
-
-            Route::get('/{id}', [ThreeHourReportDashboardController::class, 'show'])
-                ->name('show');
-
-            Route::get('/export/excel', [ThreeHourReportDashboardController::class, 'export'])
-                ->name('export');
-
-            // Upload Laporan (Manager only)
-            Route::middleware('role:manager|superadmin')->group(function () {
-                Route::get('/create', [ThreeHourReportManagerController::class, 'create'])
-                    ->name('create');
-                Route::post('/', [ThreeHourReportManagerController::class, 'store'])
-                    ->name('store');
-                Route::get('/{id}/edit', [ThreeHourReportManagerController::class, 'edit'])
-                    ->name('edit');
-                Route::put('/{id}', [ThreeHourReportManagerController::class, 'update'])
-                    ->name('update');
-            });
-
-            Route::delete('/{id}', [ThreeHourReportManagerController::class, 'destroy'])
-                ->middleware('role:superadmin')
-                ->name('destroy');
         });
     });
 
@@ -486,8 +473,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/gaji-pokok/{gajiPokok}', [GajihPokokController::class, 'destroy'])->name('gaji-pokok.destroy');
 
         Route::post('/gaji-pokok-import', [GajihPokokImportController::class, 'store'])->name('gaji-pokok.import');
-        Route::get('/gaji-pokok/{gajihPokok}/export-pdf', [GajihPokokController::class, 'exportPdf'])
-            ->name('gaji-pokok.export-pdf');
+        // Route::get('/gaji-pokok/{gajihPokok}/export-pdf', [GajihPokokController::class, 'exportPdf'])
+        //     ->name('gaji-pokok.export-pdf');
 
 
         /*
